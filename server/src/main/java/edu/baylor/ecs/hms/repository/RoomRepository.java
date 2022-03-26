@@ -21,15 +21,15 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
 
     /**
      * Find by roomId
-     * @param roomId roomId
+     * @param roomNumber roomNumber
      * @return a Room by roomId
      */
-    Optional<Room> findByRoomId(Long roomId);
+    Optional<Room> findByRoomNumber(Long roomNumber);
 
     /**
      * Returns if a roomId is taken
-     * @param roomId roomId
+     * @param roomNumber roomNumber
      * @return if a roomId is taken
      */
-    Boolean existsByRoomId(Long roomId);
+    Boolean existsByRoomNumber(Long roomNumber);
 }

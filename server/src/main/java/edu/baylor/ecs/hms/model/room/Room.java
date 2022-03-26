@@ -5,6 +5,7 @@
 
 package edu.baylor.ecs.hms.model.room;
 
+import edu.baylor.ecs.hms.dto.room.RoomDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -45,5 +46,15 @@ public class Room {
     public Room(Long roomNumber, Long floorNumber) {
         this.roomNumber = roomNumber;
         this.floorNumber = floorNumber;
+    }
+
+    public Room(Long roomNumber, Long floorNumber, RoomStatus status) {
+        this.roomNumber = roomNumber;
+        this.floorNumber = floorNumber;
+        this.status = status;
+    }
+
+    public RoomDTO toDTO() {
+        return new RoomDTO(roomNumber, floorNumber, status);
     }
 }
