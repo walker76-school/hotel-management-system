@@ -10,4 +10,5 @@ public interface IService<T> {
     T save(T t);
     void update(T t);
     void delete(T t);
+    void deleteById(Long id);
 }

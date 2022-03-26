@@ -1,8 +1,9 @@
-package edu.baylor.ecs.hms.dto.room;
 /*
  * Filename: RoomDTO.java
  * Author: Andrew Walker
  */
+
+package edu.baylor.ecs.hms.dto.room;
 
 import edu.baylor.ecs.hms.model.room.Room;
 import edu.baylor.ecs.hms.model.room.RoomStatus;

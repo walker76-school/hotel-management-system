@@ -39,4 +39,9 @@ public class RoomDAO implements DAO<Room> {
     public void delete(Room room) {
         roomRepository.delete(room);
     }
+
+    @Override
+    public void deleteById(Long id) {
+        roomRepository.deleteById(id);
+    }
 }
