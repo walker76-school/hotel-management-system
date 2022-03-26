@@ -44,11 +44,8 @@ public class RoomService implements IService<RoomDTO> {
         roomDAO.delete(room);
     }
 
-    public void deleteByRoomNumber(Long roomNumber) {
-        RoomDTO roomDTO = get(roomNumber);
-        if(roomDTO != null) {
-            Room room = new Room(roomDTO.getRoomNumber(), roomDTO.getFloorNumber(), roomDTO.getStatus());
-            roomDAO.delete(room);
-        }
+    @Override
+    public void deleteById(Long id) {
+        roomDAO.deleteById(id);
     }
 }

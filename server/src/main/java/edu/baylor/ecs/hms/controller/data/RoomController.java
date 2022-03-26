@@ -1,4 +1,4 @@
-package edu.baylor.ecs.hms.controller;
+package edu.baylor.ecs.hms.controller.data;
 
 import edu.baylor.ecs.hms.dto.room.RoomDTO;
 import edu.baylor.ecs.hms.payload.room.RoomRequest;
@@ -59,6 +59,6 @@ public class RoomController {
     @DeleteMapping("/{roomNumber}")
     @PreAuthorize("hasRole('ADMIN')")
     public void deleteByRoomNumber(@PathVariable(value = "roomNumber") Long roomNumber) {
-        roomService.deleteByRoomNumber(roomNumber);
+        roomService.deleteById(roomNumber);
     }
 }
