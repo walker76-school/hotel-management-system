@@ -16,7 +16,7 @@ public class RoomDAO implements DAO<Room> {
 
     @Override
     public Optional<Room> get(Long roomNumber) {
-        return roomRepository.findByRoomNumber(roomNumber);
+        return roomRepository.findById(roomNumber);
     }
 
     @Override

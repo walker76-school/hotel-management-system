@@ -55,24 +55,24 @@ public class RoomController {
     }
 
     /**
-     * Returns a room by room number
-     * @param roomNumber roomNumber
-     * @return a room by room number
+     * Returns a room by roomId
+     * @param roomId roomId
+     * @return a room by roomIdr
      */
     @GetMapping("/{roomId}")
     @PreAuthorize("hasRole('USER')")
-    public RoomDTO getRoomByRoomNumber(@PathVariable(value = "roomNumber") Long roomNumber) {
-        return roomService.get(roomNumber);
+    public RoomDTO get(@PathVariable(value = "roomId") Long roomId) {
+        return roomService.get(roomId);
     }
 
     /**
      * Deletes a room by room number
-     * @param roomNumber roomNumber
+     * @param roomId roomId
      */
-    @DeleteMapping("/{roomNumber}")
+    @DeleteMapping("/{roomId}")
     @PreAuthorize("hasRole('ADMIN')")
-    public void deleteByRoomNumber(@PathVariable(value = "roomNumber") Long roomNumber) {
-        roomService.deleteById(roomNumber);
+    public void delete(@PathVariable(value = "roomId") Long roomId) {
+        roomService.deleteById(roomId);
     }
 
     /**

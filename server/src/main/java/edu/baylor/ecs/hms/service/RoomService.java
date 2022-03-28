@@ -35,8 +35,7 @@ public class RoomService implements IService<RoomDTO> {
 
     @Override
     public RoomDTO save(RoomDTO roomDTO) {
-        Room room = new Room(roomDTO.getRoomNumber(), roomDTO.getFloorNumber(), roomDTO.getStatus());
-        return roomDAO.save(room).toDTO();
+        return roomDAO.save(new Room(roomDTO)).toDTO();
     }
 
     @Override
@@ -52,8 +51,7 @@ public class RoomService implements IService<RoomDTO> {
 
     @Override
     public void delete(RoomDTO roomDTO) {
-        Room room = new Room(roomDTO.getRoomNumber(), roomDTO.getFloorNumber(), roomDTO.getStatus());
-        roomDAO.delete(room);
+        roomDAO.delete(new Room(roomDTO));
     }
 
     @Override

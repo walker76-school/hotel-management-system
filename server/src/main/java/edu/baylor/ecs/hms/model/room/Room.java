@@ -8,6 +8,7 @@ package edu.baylor.ecs.hms.model.room;
 import edu.baylor.ecs.hms.dto.RoomDTO;
 import edu.baylor.ecs.hms.model.hotel.Hotel;
 import edu.baylor.ecs.hms.model.reservation.Reservation;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,6 +26,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 
 @Entity
 @Table(name = "rooms", uniqueConstraints = {
@@ -56,18 +58,14 @@ public class Room {
     @ManyToOne
     private Hotel hotel = null;
 
-    public Room(Long roomNumber, Long floorNumber) {
-        this.roomNumber = roomNumber;
-        this.floorNumber = floorNumber;
-    }
-
-    public Room(Long roomNumber, Long floorNumber, RoomStatus status) {
-        this.roomNumber = roomNumber;
-        this.floorNumber = floorNumber;
-        this.status = status;
+    public Room(RoomDTO dto) {
+        this.id = dto.getId();
+        this.roomNumber = dto.getRoomNumber();
+        this.floorNumber = dto.getFloorNumber();
+        this.status = dto.getStatus();
     }
 
     public RoomDTO toDTO() {
-        return new RoomDTO(null, roomNumber, floorNumber, status);
+        return new RoomDTO(id, roomNumber, floorNumber, status);
     }
 }
