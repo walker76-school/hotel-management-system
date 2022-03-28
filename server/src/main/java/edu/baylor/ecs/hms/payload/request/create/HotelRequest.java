@@ -1,4 +1,4 @@
-package edu.baylor.ecs.hms.payload.request;
+package edu.baylor.ecs.hms.payload.request.create;
 
 import edu.baylor.ecs.hms.dto.HotelDTO;
 import lombok.AllArgsConstructor;

@@ -1,12 +1,17 @@
 package edu.baylor.ecs.hms.service;
 
 import edu.baylor.ecs.hms.dao.AmenityDAO;
+import edu.baylor.ecs.hms.dao.HotelDAO;
 import edu.baylor.ecs.hms.dto.AmenityDTO;
+import edu.baylor.ecs.hms.exception.ResourceNotFoundException;
 import edu.baylor.ecs.hms.model.amenity.Amenity;
+import edu.baylor.ecs.hms.model.hotel.Hotel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Optional;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 @Service
@@ -14,6 +19,9 @@ public class AmenityService implements IService<AmenityDTO> {
 
     @Autowired
     AmenityDAO amenityDAO;
+
+    @Autowired
+    HotelDAO hotelDAO;
 
     @Override
     public AmenityDTO get(Long id) {
@@ -32,7 +40,17 @@ public class AmenityService implements IService<AmenityDTO> {
 
     @Override
     public void update(AmenityDTO amenityDTO) {
-        amenityDAO.save(new Amenity(amenityDTO));
+        Optional<Amenity> amenityOptional = amenityDAO.get(amenityDTO.getId());
+        if(amenityOptional.isPresent()) {
+            Amenity amenity = amenityOptional.get();
+            amenity.setName(amenityDTO.getName());
+            amenity.setDescription(amenityDTO.getDescription());
+            amenity.setStatus(amenityDTO.getStatus());
+
+            amenityDAO.update(amenity);
+        } else {
+            throw new ResourceNotFoundException("amenity", "id", amenityDTO.getId());
+        }
     }
 
     @Override
@@ -43,5 +61,16 @@ public class AmenityService implements IService<AmenityDTO> {
     @Override
     public void deleteById(Long id) {
         amenityDAO.deleteById(id);
+    }
+
+    public void linkHotelAndAmenity(Long hotelId, Long amenityId) throws Throwable {
+        Hotel hotel = hotelDAO.get(hotelId).orElseThrow((Supplier<Throwable>) () -> new ResourceNotFoundException("hotel", "id", hotelId));
+        Amenity amenity = amenityDAO.get(amenityId).orElseThrow((Supplier<Throwable>) () -> new ResourceNotFoundException("amenity", "id", amenityId));
+
+        hotel.getAmenities().add(amenity);
+        amenity.getHotels().add(hotel);
+
+        hotelDAO.update(hotel);
+        amenityDAO.update(amenity);
     }
 }

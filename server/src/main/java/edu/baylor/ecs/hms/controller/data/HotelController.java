@@ -1,7 +1,8 @@
 package edu.baylor.ecs.hms.controller.data;
 
 import edu.baylor.ecs.hms.dto.HotelDTO;
-import edu.baylor.ecs.hms.payload.request.HotelRequest;
+import edu.baylor.ecs.hms.payload.request.create.HotelRequest;
+import edu.baylor.ecs.hms.payload.request.update.HotelUpdateRequest;
 import edu.baylor.ecs.hms.service.HotelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -39,6 +40,15 @@ public class HotelController {
     @PreAuthorize("hasRole('ADMIN')")
     public HotelDTO save(@RequestBody HotelRequest hotelRequest) {
         return hotelService.save(hotelRequest.toDTO());
+    }
+
+    /**
+     * update a hotel
+     */
+    @PutMapping("/")
+    @PreAuthorize("hasRole('ADMIN')")
+    public void update(@RequestBody HotelUpdateRequest hotelRequest) throws Throwable {
+        hotelService.update(hotelRequest.toDTO());
     }
 
     /**

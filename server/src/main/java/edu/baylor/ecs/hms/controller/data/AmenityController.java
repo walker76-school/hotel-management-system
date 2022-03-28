@@ -1,7 +1,9 @@
 package edu.baylor.ecs.hms.controller.data;
 
 import edu.baylor.ecs.hms.dto.AmenityDTO;
-import edu.baylor.ecs.hms.payload.request.AmenityRequest;
+import edu.baylor.ecs.hms.payload.request.create.AmenityRequest;
+import edu.baylor.ecs.hms.payload.request.misc.LinkHotelAndAmenityRequest;
+import edu.baylor.ecs.hms.payload.request.update.AmenityUpdateRequest;
 import edu.baylor.ecs.hms.service.AmenityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -32,13 +34,23 @@ public class AmenityController {
     }
 
     /**
-     * Returns all amenities
-     * @return all amenities
+     * Save an amenity
+     * @return saved amenity
      */
     @PostMapping("/")
     @PreAuthorize("hasRole('ADMIN')")
     public AmenityDTO saveAmenity(@RequestBody AmenityRequest amenityRequest) {
         return amenityService.save(amenityRequest.toDTO());
+    }
+
+    /**
+     * Update amenity
+     * @return updated amenity
+     */
+    @PutMapping("/")
+    @PreAuthorize("hasRole('ADMIN')")
+    public void updateAmenity(@RequestBody AmenityUpdateRequest amenityRequest) {
+        amenityService.update(amenityRequest.toDTO());
     }
 
     /**
@@ -60,5 +72,14 @@ public class AmenityController {
     @PreAuthorize("hasRole('ADMIN')")
     public void deleteById(@PathVariable(value = "id") Long id) {
         amenityService.deleteById(id);
+    }
+
+    /**
+     * Link amenity and hotel
+     */
+    @PostMapping("/link")
+    @PreAuthorize("hasRole('ADMIN')")
+    public void link(@RequestBody LinkHotelAndAmenityRequest linkRequest) throws Throwable {
+        amenityService.linkHotelAndAmenity(linkRequest.getHotelId(), linkRequest.getAmenityId());
     }
 }

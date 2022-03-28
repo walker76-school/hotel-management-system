@@ -1,4 +1,4 @@
-package edu.baylor.ecs.hms.payload.request;
+package edu.baylor.ecs.hms.payload.request.update;
 
 import edu.baylor.ecs.hms.dto.ReservationDTO;
 import lombok.AllArgsConstructor;
@@ -12,13 +12,14 @@ import java.time.Instant;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReservationRequest {
+public class ReservationUpdateRequest {
+    private Long id;
     private Instant startDate;
     private Instant endDate;
     private Long customerNumber;
     private Long roomNumber;
 
     public ReservationDTO toDTO() {
-        return new ReservationDTO(null, startDate, endDate, customerNumber, roomNumber);
+        return new ReservationDTO(id, startDate, endDate, customerNumber, roomNumber);
     }
 }

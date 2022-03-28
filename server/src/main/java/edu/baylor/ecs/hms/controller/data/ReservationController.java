@@ -1,7 +1,8 @@
 package edu.baylor.ecs.hms.controller.data;
 
 import edu.baylor.ecs.hms.dto.ReservationDTO;
-import edu.baylor.ecs.hms.payload.request.ReservationRequest;
+import edu.baylor.ecs.hms.payload.request.create.ReservationRequest;
+import edu.baylor.ecs.hms.payload.request.update.ReservationUpdateRequest;
 import edu.baylor.ecs.hms.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
 
 /**
- * Controller for Amenity data
+ * Controller for Reservation data
  *
  * @author Andrew Walker
  */
@@ -22,29 +23,38 @@ public class ReservationController {
     private ReservationService reservationService;
 
     /**
-     * Returns all amenities
-     * @return all amenities
+     * Returns all reservations
+     * @return all reservations
      */
     @GetMapping("/")
     @PreAuthorize("hasRole('USER')")
-    public Collection<ReservationDTO> getAllAmenities() {
+    public Collection<ReservationDTO> getAll() {
         return reservationService.getAll();
     }
 
     /**
-     * Returns all amenities
-     * @return all amenities
+     * Saves a reservation
+     * @return a reservation
      */
     @PostMapping("/")
     @PreAuthorize("hasRole('ADMIN')")
-    public ReservationDTO saveAmenity(@RequestBody ReservationRequest reservationRequest) {
+    public ReservationDTO save(@RequestBody ReservationRequest reservationRequest) {
         return reservationService.save(reservationRequest.toDTO());
     }
 
     /**
-     * Returns an amenity by id
+     * Update a reservation
+     */
+    @PutMapping("/")
+    @PreAuthorize("hasRole('ADMIN')")
+    public void update(@RequestBody ReservationUpdateRequest reservationRequest) throws Throwable {
+        reservationService.update(reservationRequest.toDTO());
+    }
+
+    /**
+     * Returns a reservation by id
      * @param id id
-     * @return an amenity by id
+     * @return a reservation by id
      */
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('USER')")
@@ -53,7 +63,7 @@ public class ReservationController {
     }
 
     /**
-     * Deletes an amenity by id
+     * Deletes a reservation by id
      * @param id id
      */
     @DeleteMapping("/{id}")

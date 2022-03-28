@@ -1,4 +1,4 @@
-package edu.baylor.ecs.hms.payload.request;
+package edu.baylor.ecs.hms.payload.request.update;
 
 /*
  * Filename: RoomRequest.java
@@ -21,12 +21,13 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RoomRequest {
+public class RoomUpdateRequest {
+    private Long id;
     private Long roomNumber;
     private Long floorNumber;
     private RoomStatus status;
 
     public RoomDTO toDTO() {
-        return new RoomDTO(roomNumber, floorNumber, status);
+        return new RoomDTO(id, roomNumber, floorNumber, status);
     }
 }

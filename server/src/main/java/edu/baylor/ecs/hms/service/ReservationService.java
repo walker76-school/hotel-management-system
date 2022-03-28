@@ -4,6 +4,7 @@ import edu.baylor.ecs.hms.dao.ReservationDAO;
 import edu.baylor.ecs.hms.dao.RoomDAO;
 import edu.baylor.ecs.hms.dto.ReservationDTO;
 import edu.baylor.ecs.hms.exception.ResourceNotFoundException;
+import edu.baylor.ecs.hms.model.hotel.Hotel;
 import edu.baylor.ecs.hms.model.people.Customer;
 import edu.baylor.ecs.hms.model.reservation.Reservation;
 import edu.baylor.ecs.hms.model.room.Room;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.Optional;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 @Service
@@ -67,8 +69,19 @@ public class ReservationService implements IService<ReservationDTO> {
     }
 
     @Override
-    public void update(ReservationDTO reservationDTO) {
-        reservationDAO.save(new Reservation(reservationDTO));
+    public void update(ReservationDTO reservationDTO) throws Throwable {
+        Reservation reservation = reservationDAO.get(reservationDTO.getId()).orElseThrow((Supplier<Throwable>) () -> new ResourceNotFoundException("reservation", "id", reservationDTO.getId()));
+        Room room = roomDAO.get(reservationDTO.getRoomNumber()).orElseThrow((Supplier<Throwable>) () -> new ResourceNotFoundException("room", "id", reservationDTO.getRoomNumber()));
+
+        room.getReservations().remove(reservation);
+        reservation.setRoom(room);
+        room.getReservations().add(reservation);
+
+        reservation.setStartDate(reservationDTO.getStartDate());
+        reservation.setEndDate(reservationDTO.getEndDate());
+
+        reservationDAO.update(reservation);
+        roomDAO.update(room);
     }
 
     @Override

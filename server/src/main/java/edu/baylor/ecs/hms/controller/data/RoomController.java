@@ -1,7 +1,10 @@
 package edu.baylor.ecs.hms.controller.data;
 
 import edu.baylor.ecs.hms.dto.RoomDTO;
-import edu.baylor.ecs.hms.payload.request.RoomRequest;
+import edu.baylor.ecs.hms.payload.request.create.RoomRequest;
+import edu.baylor.ecs.hms.payload.request.misc.LinkHotelAndAmenityRequest;
+import edu.baylor.ecs.hms.payload.request.misc.LinkHotelAndRoomRequest;
+import edu.baylor.ecs.hms.payload.request.update.RoomUpdateRequest;
 import edu.baylor.ecs.hms.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -27,18 +30,28 @@ public class RoomController {
      */
     @GetMapping("/")
     @PreAuthorize("hasRole('USER')")
-    public Collection<RoomDTO> getAllRooms() {
+    public Collection<RoomDTO> getAll() {
         return roomService.getAll();
     }
 
     /**
-     * Returns all rooms
-     * @return all rooms
+     * Saves a room
+     * @return saved room
      */
     @PostMapping("/")
     @PreAuthorize("hasRole('ADMIN')")
-    public RoomDTO saveRoom(@RequestBody RoomRequest roomRequest) {
+    public RoomDTO save(@RequestBody RoomRequest roomRequest) {
         return roomService.save(roomRequest.toDTO());
+    }
+
+    /**
+     * Saves a room
+     * @return saved room
+     */
+    @PutMapping("/")
+    @PreAuthorize("hasRole('ADMIN')")
+    public void update(@RequestBody RoomUpdateRequest roomRequest) throws Throwable {
+        roomService.update(roomRequest.toDTO());
     }
 
     /**
@@ -60,5 +73,14 @@ public class RoomController {
     @PreAuthorize("hasRole('ADMIN')")
     public void deleteByRoomNumber(@PathVariable(value = "roomNumber") Long roomNumber) {
         roomService.deleteById(roomNumber);
+    }
+
+    /**
+     * Link room and hotel
+     */
+    @PostMapping("/link")
+    @PreAuthorize("hasRole('ADMIN')")
+    public void link(@RequestBody LinkHotelAndRoomRequest request) throws Throwable {
+        roomService.linkHotelAndRoom(request.getHotelId(), request.getRoomId());
     }
 }

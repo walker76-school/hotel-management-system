@@ -2,11 +2,14 @@ package edu.baylor.ecs.hms.service;
 
 import edu.baylor.ecs.hms.dao.ReviewDAO;
 import edu.baylor.ecs.hms.dto.ReviewDTO;
+import edu.baylor.ecs.hms.exception.ResourceNotFoundException;
+import edu.baylor.ecs.hms.model.reservation.Reservation;
 import edu.baylor.ecs.hms.model.review.Review;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,8 +34,13 @@ public class ReviewService implements IService<ReviewDTO> {
     }
 
     @Override
-    public void update(ReviewDTO reviewDTO) {
-        dao.save(new Review(reviewDTO));
+    public void update(ReviewDTO reviewDTO) throws Throwable {
+        Review review = dao.get(reviewDTO.getId()).orElseThrow((Supplier<Throwable>) () -> new ResourceNotFoundException("review", "id", reviewDTO.getId()));
+
+        review.setStars(reviewDTO.getStars());
+        review.setDescription(reviewDTO.getDescription());
+
+        dao.update(review);
     }
 
     @Override

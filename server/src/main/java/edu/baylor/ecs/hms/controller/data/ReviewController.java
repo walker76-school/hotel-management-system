@@ -1,7 +1,8 @@
 package edu.baylor.ecs.hms.controller.data;
 
 import edu.baylor.ecs.hms.dto.ReviewDTO;
-import edu.baylor.ecs.hms.payload.request.ReviewRequest;
+import edu.baylor.ecs.hms.payload.request.create.ReviewRequest;
+import edu.baylor.ecs.hms.payload.request.update.ReviewUpdateRequest;
 import edu.baylor.ecs.hms.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,12 +23,12 @@ public class ReviewController {
     private ReviewService reviewService;
 
     /**
-     * Returns all rooms
-     * @return all rooms
+     * Returns all review
+     * @return all review
      */
     @GetMapping("/")
     @PreAuthorize("hasRole('USER')")
-    public Collection<ReviewDTO> getAllReviews() {
+    public Collection<ReviewDTO> getAll() {
         return reviewService.getAll();
     }
 
@@ -37,8 +38,18 @@ public class ReviewController {
      */
     @PostMapping("/")
     @PreAuthorize("hasRole('ADMIN')")
-    public ReviewDTO saveReview(@RequestBody ReviewRequest reviewRequest) {
+    public ReviewDTO save(@RequestBody ReviewRequest reviewRequest) {
         return reviewService.save(reviewRequest.toDTO());
+    }
+
+    /**
+     * Saves a review
+     * @return saved review
+     */
+    @PutMapping("/")
+    @PreAuthorize("hasRole('ADMIN')")
+    public void update(@RequestBody ReviewUpdateRequest reviewRequest) throws Throwable {
+        reviewService.update(reviewRequest.toDTO());
     }
 
     /**
