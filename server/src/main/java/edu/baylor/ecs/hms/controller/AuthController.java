@@ -9,6 +9,7 @@ import edu.baylor.ecs.hms.exception.AppException;
 import edu.baylor.ecs.hms.model.auth.Role;
 import edu.baylor.ecs.hms.model.auth.RoleName;
 import edu.baylor.ecs.hms.model.auth.User;
+import edu.baylor.ecs.hms.model.people.Customer;
 import edu.baylor.ecs.hms.payload.ApiResponse;
 import edu.baylor.ecs.hms.payload.JwtAuthenticationResponse;
 import edu.baylor.ecs.hms.payload.LoginRequest;
@@ -93,7 +94,7 @@ public class AuthController {
         }
 
         // Creating user's account
-        User user = new User(signUpRequest.getUsername(), signUpRequest.getPassword());
+        User user = new Customer(signUpRequest.getUsername(), signUpRequest.getPassword());
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
@@ -108,6 +109,12 @@ public class AuthController {
         roleSet.add(userRole);
 
         user.setRoles(roleSet);
+
+        user.setFirstName(signUpRequest.getFirstName());
+        user.setLastName(signUpRequest.getLastName());
+        user.setEmail(signUpRequest.getEmail());
+        user.setPhoneNumber(signUpRequest.getPhoneNumber());
+        user.setAge(signUpRequest.getAge());
 
         User result = userRepository.save(user);
 

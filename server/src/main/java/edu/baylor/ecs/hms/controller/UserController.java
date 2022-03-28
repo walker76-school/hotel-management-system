@@ -44,7 +44,7 @@ public class UserController {
 
         Set<RoleName> roleNameSet = currentUser.getAuthorities().stream().map(authority -> Enum.valueOf(RoleName.class, authority.getAuthority())).collect(Collectors.toSet());
         // Gets first authority from UserPrincipal's list of authorities to use when creating userSummary
-        return new UserSummary(currentUser.getId(), currentUser.getUsername(), roleNameSet);
+        return new UserSummary(currentUser.getId(), currentUser.getUsername(), roleNameSet, currentUser.getFirstName(), currentUser.getLastName(), currentUser.getEmail(), currentUser.getAge(), currentUser.getPhoneNumber());
     }
 
     /**
