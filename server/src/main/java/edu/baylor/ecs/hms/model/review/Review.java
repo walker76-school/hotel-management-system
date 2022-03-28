@@ -29,7 +29,6 @@ import javax.validation.constraints.Size;
 public class Review {
 
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

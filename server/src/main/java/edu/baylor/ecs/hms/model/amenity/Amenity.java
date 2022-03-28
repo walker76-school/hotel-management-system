@@ -30,7 +30,6 @@ import javax.validation.constraints.Size;
 public class Amenity {
 
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -42,13 +41,13 @@ public class Amenity {
     @Size(max = 250)
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(name = "amenity_statuses",
             joinColumns = @JoinColumn(name = "amenity_id"),
             inverseJoinColumns = @JoinColumn(name = "status_id"))
-    private RoomStatus status = null;
+    private AmenityStatus status = null;
 
-    public Amenity(String name, String description, RoomStatus status) {
+    public Amenity(String name, String description, AmenityStatus status) {
         this.name = name;
         this.description = description;
         this.status = status;

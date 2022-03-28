@@ -6,6 +6,7 @@
 package edu.baylor.ecs.hms.dto;
 
 import edu.baylor.ecs.hms.model.amenity.Amenity;
+import edu.baylor.ecs.hms.model.amenity.AmenityStatus;
 import edu.baylor.ecs.hms.model.room.RoomStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,9 +25,9 @@ public class AmenityDTO {
     private Long id;
     private String name;
     private String description;
-    private RoomStatus status;
+    private AmenityStatus status;
 
-    public AmenityDTO(Long id, String name, String description, RoomStatus status) {
+    public AmenityDTO(Long id, String name, String description, AmenityStatus status) {
         this.id = id;
         this.name = name;
         this.description = description;
