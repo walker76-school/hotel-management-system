@@ -1,10 +1,7 @@
 package edu.baylor.ecs.hms.controller.data;
 
-import edu.baylor.ecs.hms.dto.AmenityDTO;
 import edu.baylor.ecs.hms.dto.ReservationDTO;
-import edu.baylor.ecs.hms.payload.request.AmenityRequest;
 import edu.baylor.ecs.hms.payload.request.ReservationRequest;
-import edu.baylor.ecs.hms.service.AmenityService;
 import edu.baylor.ecs.hms.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;

@@ -1,6 +1,5 @@
 package edu.baylor.ecs.hms.dao;
 
-import edu.baylor.ecs.hms.dao.DAO;
 import edu.baylor.ecs.hms.model.amenity.Amenity;
 import edu.baylor.ecs.hms.repository.AmenityRepository;
 import org.springframework.beans.factory.annotation.Autowired;

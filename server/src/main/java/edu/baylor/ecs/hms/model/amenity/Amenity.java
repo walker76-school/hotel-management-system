@@ -6,15 +6,16 @@
 package edu.baylor.ecs.hms.model.amenity;
 
 import edu.baylor.ecs.hms.dto.AmenityDTO;
-import edu.baylor.ecs.hms.model.room.RoomStatus;
+import edu.baylor.ecs.hms.model.hotel.Hotel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * An Amenity entity
@@ -46,6 +47,9 @@ public class Amenity {
             joinColumns = @JoinColumn(name = "amenity_id"),
             inverseJoinColumns = @JoinColumn(name = "status_id"))
     private AmenityStatus status = null;
+
+    @ManyToMany
+    private Set<Hotel> hotels = new HashSet<>();
 
     public Amenity(String name, String description, AmenityStatus status) {
         this.name = name;

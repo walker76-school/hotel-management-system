@@ -1,8 +1,6 @@
 package edu.baylor.ecs.hms.dao;
 
-import edu.baylor.ecs.hms.model.amenity.Amenity;
 import edu.baylor.ecs.hms.model.reservation.Reservation;
-import edu.baylor.ecs.hms.repository.AmenityRepository;
 import edu.baylor.ecs.hms.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

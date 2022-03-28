@@ -12,13 +12,6 @@ import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.NaturalId;
-
-import javax.persistence.*;
-
 /**
  * A status of a Room
  */

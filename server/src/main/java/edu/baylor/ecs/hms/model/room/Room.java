@@ -6,6 +6,7 @@
 package edu.baylor.ecs.hms.model.room;
 
 import edu.baylor.ecs.hms.dto.RoomDTO;
+import edu.baylor.ecs.hms.model.hotel.Hotel;
 import edu.baylor.ecs.hms.model.reservation.Reservation;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,6 +35,9 @@ import java.util.Set;
 public class Room {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @NotNull
     private Long roomNumber;
 
@@ -42,12 +46,15 @@ public class Room {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(name = "room_statuses",
-            joinColumns = @JoinColumn(name = "room_number"),
+            joinColumns = @JoinColumn(name = "room_id"),
             inverseJoinColumns = @JoinColumn(name = "status_id"))
     private RoomStatus status = null;
 
     @OneToMany
     private Set<Reservation> reservations = new HashSet<>();
+
+    @ManyToOne
+    private Hotel hotel = null;
 
     public Room(Long roomNumber, Long floorNumber) {
         this.roomNumber = roomNumber;
