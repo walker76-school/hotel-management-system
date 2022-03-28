@@ -57,14 +57,7 @@ public class Amenity {
         this.status = status;
     }
 
-    public Amenity(AmenityDTO dto) {
-        this.id = dto.getId();
-        this.name = dto.getName();
-        this.description = dto.getDescription();
-        this.status = dto.getStatus();
-    }
-
     public AmenityDTO toDTO() {
-        return new AmenityDTO(id, name, description, status);
+        return new AmenityDTO(id, name, description, status.getName());
     }
 }

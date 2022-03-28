@@ -2,6 +2,7 @@ package edu.baylor.ecs.hms.payload.request.update;
 
 import edu.baylor.ecs.hms.dto.AmenityDTO;
 import edu.baylor.ecs.hms.model.amenity.AmenityStatus;
+import edu.baylor.ecs.hms.model.amenity.AmenityStatusName;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +17,7 @@ public class AmenityUpdateRequest {
     private Long id;
     private String name;
     private String description;
-    private AmenityStatus status;
+    private AmenityStatusName status;
 
     public AmenityDTO toDTO() {
         return new AmenityDTO(id, name, description, status);

@@ -39,7 +39,7 @@ public class AmenityController {
      */
     @PostMapping("/")
     @PreAuthorize("hasRole('ADMIN')")
-    public AmenityDTO saveAmenity(@RequestBody AmenityRequest amenityRequest) {
+    public AmenityDTO saveAmenity(@RequestBody AmenityRequest amenityRequest) throws Throwable {
         return amenityService.save(amenityRequest.toDTO());
     }
 
@@ -49,7 +49,7 @@ public class AmenityController {
      */
     @PutMapping("/")
     @PreAuthorize("hasRole('ADMIN')")
-    public void updateAmenity(@RequestBody AmenityUpdateRequest amenityRequest) {
+    public void updateAmenity(@RequestBody AmenityUpdateRequest amenityRequest) throws Throwable {
         amenityService.update(amenityRequest.toDTO());
     }
 
