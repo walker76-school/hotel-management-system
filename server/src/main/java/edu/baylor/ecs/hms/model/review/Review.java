@@ -6,6 +6,7 @@
 package edu.baylor.ecs.hms.model.review;
 
 import edu.baylor.ecs.hms.dto.ReviewDTO;
+import edu.baylor.ecs.hms.model.hotel.Hotel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -38,6 +39,9 @@ public class Review {
     @NotBlank
     @Size(max = 200)
     private String description;
+
+    @ManyToOne
+    private Hotel hotel = null;
 
     public Review(ReviewDTO dto) {
         this.stars = dto.getStars();

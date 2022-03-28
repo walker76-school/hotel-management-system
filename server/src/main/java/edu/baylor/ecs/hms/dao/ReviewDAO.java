@@ -1,6 +1,5 @@
 package edu.baylor.ecs.hms.dao;
 
-import edu.baylor.ecs.hms.dao.DAO;
 import edu.baylor.ecs.hms.model.review.Review;
 import edu.baylor.ecs.hms.repository.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -11,11 +11,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReviewRequest {
-    private Long id;
     private Long stars;
     private String description;
 
     public ReviewDTO toDTO() {
-        return new ReviewDTO(id, stars, description);
+        return new ReviewDTO(null, stars, description);
     }
 }

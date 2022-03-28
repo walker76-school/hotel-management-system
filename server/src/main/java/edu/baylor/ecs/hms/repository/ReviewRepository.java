@@ -9,8 +9,6 @@ import edu.baylor.ecs.hms.model.review.Review;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-
 /**
  * Repository for Review data
  *

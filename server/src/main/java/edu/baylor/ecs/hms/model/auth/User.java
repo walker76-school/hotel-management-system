@@ -7,7 +7,6 @@ package edu.baylor.ecs.hms.model.auth;
 
 import edu.baylor.ecs.hms.model.audit.DateAudit;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
