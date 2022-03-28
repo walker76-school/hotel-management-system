@@ -14,8 +14,9 @@ public class ReviewUpdateRequest {
     private Long id;
     private Long stars;
     private String description;
+    private Long hotelId;
 
     public ReviewDTO toDTO() {
-        return new ReviewDTO(id, stars, description);
+        return new ReviewDTO(id, stars, description, hotelId);
     }
 }

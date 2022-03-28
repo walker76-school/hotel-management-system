@@ -13,8 +13,9 @@ import lombok.Setter;
 public class ReviewRequest {
     private Long stars;
     private String description;
+    private Long hotelId;
 
     public ReviewDTO toDTO() {
-        return new ReviewDTO(null, stars, description);
+        return new ReviewDTO(null, stars, description, hotelId);
     }
 }

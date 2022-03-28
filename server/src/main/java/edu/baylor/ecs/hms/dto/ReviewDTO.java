@@ -13,4 +13,5 @@ public class ReviewDTO {
     private Long id;
     private Long stars;
     private String description;
+    private Long hotelId;
 }

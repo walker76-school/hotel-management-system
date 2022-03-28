@@ -38,7 +38,7 @@ public class ReviewController {
      */
     @PostMapping("/")
     @PreAuthorize("hasRole('ADMIN')")
-    public ReviewDTO save(@RequestBody ReviewRequest reviewRequest) {
+    public ReviewDTO save(@RequestBody ReviewRequest reviewRequest) throws Throwable {
         return reviewService.save(reviewRequest.toDTO());
     }
 

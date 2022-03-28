@@ -49,6 +49,7 @@ public class Review {
     }
 
     public ReviewDTO toDTO() {
-        return new ReviewDTO(id, stars, description);
+        Long hotelId = hotel != null ? hotel.getId() : null;
+        return new ReviewDTO(id, stars, description, hotelId);
     }
 }
