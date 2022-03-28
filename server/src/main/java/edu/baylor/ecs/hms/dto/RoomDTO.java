@@ -3,7 +3,7 @@
  * Author: Andrew Walker
  */
 
-package edu.baylor.ecs.hms.dto.room;
+package edu.baylor.ecs.hms.dto;
 
 import edu.baylor.ecs.hms.model.room.Room;
 import edu.baylor.ecs.hms.model.room.RoomStatus;

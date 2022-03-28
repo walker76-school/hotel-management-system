@@ -1,6 +1,6 @@
-package edu.baylor.ecs.hms.payload.amenity;
+package edu.baylor.ecs.hms.payload.request;
 
-import edu.baylor.ecs.hms.dto.amenity.AmenityDTO;
+import edu.baylor.ecs.hms.dto.AmenityDTO;
 import edu.baylor.ecs.hms.model.room.RoomStatus;
 
 public class AmenityRequest {

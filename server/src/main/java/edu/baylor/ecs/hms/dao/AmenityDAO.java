@@ -1,4 +1,4 @@
-package edu.baylor.ecs.hms.dao.amenity;
+package edu.baylor.ecs.hms.dao;
 
 import edu.baylor.ecs.hms.dao.DAO;
 import edu.baylor.ecs.hms.model.amenity.Amenity;

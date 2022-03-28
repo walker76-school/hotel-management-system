@@ -1,9 +1,8 @@
-package edu.baylor.ecs.hms.service.room;
+package edu.baylor.ecs.hms.service;
 
-import edu.baylor.ecs.hms.dao.room.RoomDAO;
-import edu.baylor.ecs.hms.dto.room.RoomDTO;
+import edu.baylor.ecs.hms.dao.RoomDAO;
+import edu.baylor.ecs.hms.dto.RoomDTO;
 import edu.baylor.ecs.hms.model.room.Room;
-import edu.baylor.ecs.hms.service.IService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

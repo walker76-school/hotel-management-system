@@ -5,7 +5,7 @@
 
 package edu.baylor.ecs.hms.model.amenity;
 
-import edu.baylor.ecs.hms.dto.amenity.AmenityDTO;
+import edu.baylor.ecs.hms.dto.AmenityDTO;
 import edu.baylor.ecs.hms.model.room.RoomStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

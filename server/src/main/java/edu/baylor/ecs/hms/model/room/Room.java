@@ -5,7 +5,7 @@
 
 package edu.baylor.ecs.hms.model.room;
 
-import edu.baylor.ecs.hms.dto.room.RoomDTO;
+import edu.baylor.ecs.hms.dto.RoomDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

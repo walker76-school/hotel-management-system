@@ -1,12 +1,11 @@
-package edu.baylor.ecs.hms.payload.room;
+package edu.baylor.ecs.hms.payload.request;
 
 /*
  * Filename: RoomRequest.java
  * Author: Andrew Walker
  */
 
-import edu.baylor.ecs.hms.dto.room.RoomDTO;
-import edu.baylor.ecs.hms.model.room.Room;
+import edu.baylor.ecs.hms.dto.RoomDTO;
 import edu.baylor.ecs.hms.model.room.RoomStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
