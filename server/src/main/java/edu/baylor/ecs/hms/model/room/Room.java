@@ -6,12 +6,15 @@
 package edu.baylor.ecs.hms.model.room;
 
 import edu.baylor.ecs.hms.dto.RoomDTO;
+import edu.baylor.ecs.hms.model.reservation.Reservation;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A Room
@@ -42,6 +45,9 @@ public class Room {
             joinColumns = @JoinColumn(name = "room_number"),
             inverseJoinColumns = @JoinColumn(name = "status_id"))
     private RoomStatus status = null;
+
+    @OneToMany
+    private Set<Reservation> reservations = new HashSet<>();
 
     public Room(Long roomNumber, Long floorNumber) {
         this.roomNumber = roomNumber;
