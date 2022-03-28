@@ -68,6 +68,6 @@ public class Room {
     }
 
     public RoomDTO toDTO() {
-        return new RoomDTO(roomNumber, floorNumber, status);
+        return new RoomDTO(null, roomNumber, floorNumber, status);
     }
 }
