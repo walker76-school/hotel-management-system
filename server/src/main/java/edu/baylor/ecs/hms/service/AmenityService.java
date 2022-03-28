@@ -1,9 +1,8 @@
-package edu.baylor.ecs.hms.service.amenity;
+package edu.baylor.ecs.hms.service;
 
-import edu.baylor.ecs.hms.dao.amenity.AmenityDAO;
-import edu.baylor.ecs.hms.dto.amenity.AmenityDTO;
+import edu.baylor.ecs.hms.dao.AmenityDAO;
+import edu.baylor.ecs.hms.dto.AmenityDTO;
 import edu.baylor.ecs.hms.model.amenity.Amenity;
-import edu.baylor.ecs.hms.service.IService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

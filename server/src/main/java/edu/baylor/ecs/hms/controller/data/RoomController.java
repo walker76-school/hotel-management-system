@@ -1,8 +1,8 @@
 package edu.baylor.ecs.hms.controller.data;
 
-import edu.baylor.ecs.hms.dto.room.RoomDTO;
-import edu.baylor.ecs.hms.payload.room.RoomRequest;
-import edu.baylor.ecs.hms.service.room.RoomService;
+import edu.baylor.ecs.hms.dto.RoomDTO;
+import edu.baylor.ecs.hms.payload.request.RoomRequest;
+import edu.baylor.ecs.hms.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
