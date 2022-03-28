@@ -6,7 +6,6 @@
 package edu.baylor.ecs.hms.dto;
 
 import edu.baylor.ecs.hms.model.amenity.Amenity;
-import edu.baylor.ecs.hms.model.amenity.AmenityStatus;
 import edu.baylor.ecs.hms.model.amenity.AmenityStatusName;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

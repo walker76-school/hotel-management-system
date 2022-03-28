@@ -37,7 +37,7 @@ public class ReservationController {
      * @return a reservation
      */
     @PostMapping("/")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER')")
     public ReservationDTO save(@RequestBody ReservationRequest reservationRequest) {
         return reservationService.save(reservationRequest.toDTO());
     }
@@ -46,7 +46,7 @@ public class ReservationController {
      * Update a reservation
      */
     @PutMapping("/")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER')")
     public void update(@RequestBody ReservationUpdateRequest reservationRequest) throws Throwable {
         reservationService.update(reservationRequest.toDTO());
     }
@@ -67,7 +67,7 @@ public class ReservationController {
      * @param id id
      */
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER')")
     public void deleteById(@PathVariable(value = "id") Long id) {
         reservationService.deleteById(id);
     }

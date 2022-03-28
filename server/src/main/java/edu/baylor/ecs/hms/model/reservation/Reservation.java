@@ -47,6 +47,6 @@ public class Reservation {
     }
 
     public ReservationDTO toDTO() {
-        return new ReservationDTO(id, startDate, endDate, customer.getId(), room.getRoomNumber());
+        return new ReservationDTO(id, startDate, endDate, customer.getId(), room.getId());
     }
 }

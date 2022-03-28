@@ -1,17 +1,13 @@
 package edu.baylor.ecs.hms.controller.data;
 
-import edu.baylor.ecs.hms.dto.HotelDTO;
-import edu.baylor.ecs.hms.payload.request.create.HotelRequest;
-import edu.baylor.ecs.hms.payload.request.misc.LinkHotelAndAmenityRequest;
 import edu.baylor.ecs.hms.payload.request.misc.LinkHotelAndHotelManagerRequest;
-import edu.baylor.ecs.hms.payload.request.update.HotelUpdateRequest;
 import edu.baylor.ecs.hms.service.HotelManagerService;
-import edu.baylor.ecs.hms.service.HotelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Collection;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Controller for Manager data

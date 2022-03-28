@@ -3,7 +3,6 @@ package edu.baylor.ecs.hms.service;
 import edu.baylor.ecs.hms.dao.ReviewDAO;
 import edu.baylor.ecs.hms.dto.ReviewDTO;
 import edu.baylor.ecs.hms.exception.ResourceNotFoundException;
-import edu.baylor.ecs.hms.model.reservation.Reservation;
 import edu.baylor.ecs.hms.model.review.Review;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

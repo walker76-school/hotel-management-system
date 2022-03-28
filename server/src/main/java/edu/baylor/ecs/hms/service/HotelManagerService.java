@@ -4,7 +4,6 @@ import edu.baylor.ecs.hms.dao.HotelDAO;
 import edu.baylor.ecs.hms.exception.ResourceNotFoundException;
 import edu.baylor.ecs.hms.model.hotel.Hotel;
 import edu.baylor.ecs.hms.model.people.HotelManager;
-import edu.baylor.ecs.hms.model.room.Room;
 import edu.baylor.ecs.hms.repository.HotelManagerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

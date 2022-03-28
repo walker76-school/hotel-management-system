@@ -1,7 +1,6 @@
 package edu.baylor.ecs.hms.payload.request.create;
 
 import edu.baylor.ecs.hms.dto.AmenityDTO;
-import edu.baylor.ecs.hms.model.amenity.AmenityStatus;
 import edu.baylor.ecs.hms.model.amenity.AmenityStatusName;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

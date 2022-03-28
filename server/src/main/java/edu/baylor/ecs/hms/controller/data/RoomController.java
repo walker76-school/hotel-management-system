@@ -2,7 +2,6 @@ package edu.baylor.ecs.hms.controller.data;
 
 import edu.baylor.ecs.hms.dto.RoomDTO;
 import edu.baylor.ecs.hms.payload.request.create.RoomRequest;
-import edu.baylor.ecs.hms.payload.request.misc.LinkHotelAndAmenityRequest;
 import edu.baylor.ecs.hms.payload.request.misc.LinkHotelAndRoomRequest;
 import edu.baylor.ecs.hms.payload.request.update.RoomUpdateRequest;
 import edu.baylor.ecs.hms.service.RoomService;

@@ -15,10 +15,10 @@ import java.time.Instant;
 public class ReservationRequest {
     private Instant startDate;
     private Instant endDate;
-    private Long customerNumber;
-    private Long roomNumber;
+    private Long customerId;
+    private Long roomId;
 
     public ReservationDTO toDTO() {
-        return new ReservationDTO(null, startDate, endDate, customerNumber, roomNumber);
+        return new ReservationDTO(null, startDate, endDate, customerId, roomId);
     }
 }

@@ -5,7 +5,6 @@
 
 package edu.baylor.ecs.hms.repository;
 
-import edu.baylor.ecs.hms.model.people.Customer;
 import edu.baylor.ecs.hms.model.people.HotelManager;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
