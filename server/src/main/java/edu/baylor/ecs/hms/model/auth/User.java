@@ -12,6 +12,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
@@ -23,15 +24,12 @@ import java.util.Set;
  */
 @Getter
 @Setter
-@NoArgsConstructor
 
 @Entity
-@Table(name = "users", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {
-            "username"
-        })
-})
-public class User extends DateAudit {
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="DISCRIMINATOR", discriminatorType=DiscriminatorType.STRING)
+@DiscriminatorValue("USER")
+public abstract class User extends DateAudit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,22 +43,31 @@ public class User extends DateAudit {
     @Size(max = 100)
     private String password;
 
-    @Size(max = 20)
-    private String subRole;
-
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    /**
-     * Creates a user from a user name and password
-     * @param username a username
-     * @param password a password
-     */
-    public User(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
+    @NotBlank
+    @Size(max = 15)
+    private String firstName;
+
+    @NotBlank
+    @Size(max = 100)
+    private String lastName;
+
+    @NotBlank
+    @Size(max = 100)
+    private String email;
+
+    @NotNull
+    private Long age;
+
+    @NotBlank
+    @Size(max = 100)
+    private String phoneNumber;
+
+//    public abstract Long getId();
+
 }

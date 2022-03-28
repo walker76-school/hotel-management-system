@@ -31,6 +31,16 @@ public class UserPrincipal implements UserDetails {
     @JsonIgnore
     private String password;
 
+    private String firstName;
+
+    private String lastName;
+
+    private String email;
+
+    private Long age;
+
+    private String phoneNumber;
+
     private Collection<? extends GrantedAuthority> authorities;
 
     /**
@@ -48,6 +58,11 @@ public class UserPrincipal implements UserDetails {
                 user.getId(),
                 user.getUsername(),
                 user.getPassword(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getEmail(),
+                user.getAge(),
+                user.getPhoneNumber(),
                 authorities
         );
     }
@@ -85,6 +100,26 @@ public class UserPrincipal implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public Long getAge() {
+        return age;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
     /**

@@ -9,6 +9,7 @@ import edu.baylor.ecs.hms.exception.AppException;
 import edu.baylor.ecs.hms.model.auth.Role;
 import edu.baylor.ecs.hms.model.auth.RoleName;
 import edu.baylor.ecs.hms.model.auth.User;
+import edu.baylor.ecs.hms.model.people.HotelManager;
 import edu.baylor.ecs.hms.repository.RoleRepository;
 import edu.baylor.ecs.hms.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,7 +89,7 @@ public class HotelManagementApplication {
 
                 // create admin account if not exists
                 if (!userRepository.existsByUsername(adminUsername)) {
-                    User admin = new User();
+                    User admin = new HotelManager();
                     admin.setUsername(adminUsername);
                     admin.setPassword(passwordEncoder.encode(adminPassword));
 
@@ -102,6 +103,12 @@ public class HotelManagementApplication {
                     roles.add(userRole);
 
                     admin.setRoles(roles);
+
+                    admin.setFirstName("admin");
+                    admin.setLastName("admin");
+                    admin.setEmail("admin@email.com");
+                    admin.setPhoneNumber("1234567890");
+                    admin.setAge(100L);
 
                     userRepository.save(admin);
                 }
