@@ -1,0 +1,20 @@
+@startuml
+participant Actor
+Actor -> ReviewController : getAll
+activate ReviewController
+ReviewController -> ReviewService : getAll
+activate ReviewService
+ReviewService -> ReviewDAO : getAll
+activate ReviewDAO
+
+ReviewDAO -> ReviewRepository: getAll
+activate ReviewRepository
+ReviewRepository --> ReviewDAO
+deactivate ReviewRepository
+
+ReviewDAO --> ReviewService
+deactivate ReviewDAO
+ReviewService --> ReviewController
+deactivate ReviewService
+return
+@enduml

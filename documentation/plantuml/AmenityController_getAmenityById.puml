@@ -1,0 +1,36 @@
+@startuml
+participant Actor
+Actor -> AmenityController : getAmenityById
+activate AmenityController
+
+AmenityController -> AmenityService : get
+activate AmenityService
+
+AmenityService -> AmenityDAO : get
+activate AmenityDAO
+
+AmenityDAO -> AmenityRepository : findById
+activate AmenityRepository
+
+AmenityRepository --> AmenityDAO
+deactivate AmenityRepository
+
+AmenityDAO --> AmenityService
+deactivate AmenityDAO
+
+AmenityService -> Amenity : toDTO
+activate Amenity
+
+Amenity -> AmenityDTO : <<create>>
+activate AmenityDTO
+
+AmenityDTO --> Amenity
+deactivate AmenityDTO
+
+Amenity --> AmenityService
+deactivate Amenity
+
+AmenityService --> AmenityController
+deactivate AmenityService
+return
+@enduml

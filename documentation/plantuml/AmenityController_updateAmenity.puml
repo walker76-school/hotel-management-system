@@ -1,0 +1,64 @@
+@startuml
+participant Actor
+Actor -> AmenityController : updateAmenity
+activate AmenityController
+AmenityController -> AmenityUpdateRequest : toDTO
+activate AmenityUpdateRequest
+AmenityUpdateRequest -> AmenityDTO : new
+activate AmenityDTO
+AmenityDTO --> AmenityUpdateRequest
+deactivate AmenityDTO
+AmenityUpdateRequest --> AmenityController
+deactivate AmenityUpdateRequest
+AmenityController -> AmenityService : update
+activate AmenityService
+AmenityService -> AmenityDAO : get
+activate AmenityDAO
+AmenityDAO -> AmenityRepository : findById
+activate AmenityRepository
+AmenityRepository --> AmenityDAO
+deactivate AmenityRepository
+AmenityDAO --> AmenityService
+deactivate AmenityDAO
+
+alt amenity not found
+
+AmenityService -> ResourceNotFoundException : new
+activate ResourceNotFoundException
+ResourceNotFoundException --> AmenityService
+deactivate ResourceNotFoundException
+AmenityService --> AmenityController
+deactivate AmenityService
+
+else
+
+AmenityService -> AmenityStatusRepository : findByName
+activate AmenityStatusRepository
+AmenityStatusRepository --> AmenityService
+deactivate AmenityStatusRepository
+
+alt status not found
+AmenityService -> ResourceNotFoundException : new
+activate ResourceNotFoundException
+ResourceNotFoundException --> AmenityService
+deactivate ResourceNotFoundException
+AmenityService --> AmenityController
+deactivate AmenityService
+
+else
+
+AmenityService -> AmenityDAO : update
+activate AmenityDAO
+
+AmenityDAO -> AmenityRepository: save
+activate AmenityRepository
+AmenityRepository --> AmenityDAO
+deactivate AmenityRepository
+
+AmenityDAO --> AmenityService
+deactivate AmenityDAO
+AmenityService --> AmenityController
+deactivate AmenityService
+end
+end
+@enduml

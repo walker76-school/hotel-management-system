@@ -1,0 +1,20 @@
+@startuml
+participant Actor
+Actor -> RoomController : getAll
+activate RoomController
+RoomController -> RoomService : getAll
+activate RoomService
+RoomService -> RoomDAO : getAll
+activate RoomDAO
+
+RoomDAO -> RoomRepository: getAll
+activate RoomRepository
+RoomRepository --> RoomDAO
+deactivate RoomRepository
+
+RoomDAO --> RoomService
+deactivate RoomDAO
+RoomService --> RoomController
+deactivate RoomService
+return
+@enduml

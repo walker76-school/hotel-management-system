@@ -1,0 +1,44 @@
+@startuml
+participant Actor
+Actor -> HotelController : update
+activate HotelController
+HotelController -> HotelUpdateRequest : toDTO
+activate HotelUpdateRequest
+HotelUpdateRequest -> HotelDTO : new
+activate HotelDTO
+HotelDTO --> HotelUpdateRequest
+deactivate HotelDTO
+HotelUpdateRequest --> HotelController
+deactivate HotelUpdateRequest
+HotelController -> HotelService : update
+activate HotelService
+HotelService -> HotelDAO : get
+activate HotelDAO
+
+HotelDAO -> HotelRepository : get
+activate HotelRepository
+HotelRepository --> HotelDAO
+deactivate HotelRepository
+
+HotelDAO --> HotelService
+deactivate HotelDAO
+
+alt hotel not found
+
+HotelService -> ResourceNotFoundException : new
+activate ResourceNotFoundException
+ResourceNotFoundException --> HotelService
+deactivate ResourceNotFoundException
+HotelService --> HotelController
+deactivate HotelService
+
+else 
+
+HotelService -> HotelDAO : update
+activate HotelDAO
+HotelDAO --> HotelService
+deactivate HotelDAO
+HotelService --> HotelController
+deactivate HotelService
+end
+@enduml

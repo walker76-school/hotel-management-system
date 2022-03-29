@@ -1,0 +1,51 @@
+@startuml
+participant Actor
+Actor -> AmenityController : saveAmenity
+activate AmenityController
+
+AmenityController -> AmenityRequest : toDTO
+activate AmenityRequest
+
+AmenityRequest -> AmenityDTO : <<create>>
+activate AmenityDTO
+
+AmenityDTO --> AmenityRequest
+deactivate AmenityDTO
+
+AmenityRequest --> AmenityController
+deactivate AmenityRequest
+
+
+
+AmenityController -> AmenityService : save(dto)
+activate AmenityService
+AmenityService -> AmenityService : amenityFromDTO(dto)
+activate AmenityService
+
+AmenityService -> AmenityDAO : save
+activate AmenityDAO
+
+
+AmenityDAO -> AmenityRepository: save
+activate AmenityRepository
+AmenityRepository --> AmenityDAO
+deactivate AmenityRepository
+
+AmenityDAO --> AmenityService
+deactivate AmenityDAO
+
+AmenityService -> Amenity : toDTO
+activate Amenity
+
+Amenity -> AmenityDTO : new
+activate AmenityDTO
+
+AmenityDTO --> Amenity
+deactivate AmenityDTO
+
+Amenity --> AmenityService
+deactivate Amenity
+
+AmenityService --> AmenityController
+deactivate AmenityService
+@enduml

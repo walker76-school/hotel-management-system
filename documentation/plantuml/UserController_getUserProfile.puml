@@ -1,0 +1,25 @@
+@startuml
+participant Actor
+Actor -> UserController : getUserProfile
+activate UserController
+UserController -> UserRepository : findByUsername
+activate UserRepository
+UserRepository --> UserController
+deactivate UserRepository
+
+alt user not found
+UserController -> ResourceNotFoundException : new
+activate ResourceNotFoundException
+ResourceNotFoundException --> UserController
+deactivate ResourceNotFoundException
+UserController --> Actor
+else
+
+UserController -> UserProfile : new
+activate UserProfile
+UserProfile --> UserController
+deactivate UserProfile
+return
+
+end
+@enduml

@@ -1,0 +1,20 @@
+@startuml
+participant Actor
+Actor -> HotelController : deleteById
+activate HotelController
+HotelController -> HotelService : deleteById
+activate HotelService
+HotelService -> HotelDAO : deleteById
+activate HotelDAO
+
+HotelDAO -> HotelRepository
+activate HotelRepository
+HotelRepository --> HotelDAO
+deactivate HotelRepository
+
+HotelDAO --> HotelService
+deactivate HotelDAO
+HotelService --> HotelController
+deactivate HotelService
+return
+@enduml

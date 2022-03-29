@@ -1,0 +1,57 @@
+@startuml
+participant Actor
+Actor -> RoomController : link
+activate RoomController
+RoomController -> RoomService : linkHotelAndRoom
+activate RoomService
+RoomService -> RoomDAO : get
+activate RoomDAO
+RoomDAO -> RoomRepository: get
+activate RoomRepository
+RoomRepository --> RoomDAO
+deactivate RoomRepository
+RoomDAO --> RoomService
+deactivate RoomDAO
+
+alt room not found
+
+RoomService -> ResourceNotFoundException : new
+activate ResourceNotFoundException
+ResourceNotFoundException --> RoomService
+deactivate ResourceNotFoundException
+RoomService --> RoomController
+RoomController --> Actor
+
+else 
+
+RoomService -> HotelDAO : get
+activate HotelDAO
+HotelDAO --> RoomService
+deactivate HotelDAO
+
+alt hotel not found
+
+RoomService -> ResourceNotFoundException : new
+activate ResourceNotFoundException
+ResourceNotFoundException --> RoomService
+deactivate ResourceNotFoundException
+RoomService --> RoomController
+RoomController --> Actor
+
+else 
+
+RoomService -> RoomDAO : update
+activate RoomDAO
+RoomDAO --> RoomService
+deactivate RoomDAO
+RoomService -> HotelDAO : update
+activate HotelDAO
+HotelDAO --> RoomService
+deactivate HotelDAO
+RoomService --> RoomController
+deactivate RoomService
+return
+
+end
+end
+@enduml

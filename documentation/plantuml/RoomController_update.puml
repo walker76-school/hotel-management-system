@@ -1,0 +1,38 @@
+@startuml
+participant Actor
+Actor -> RoomController : update
+activate RoomController
+RoomController -> RoomUpdateRequest : toDTO
+activate RoomUpdateRequest
+RoomUpdateRequest -> RoomDTO : new
+activate RoomDTO
+RoomDTO --> RoomUpdateRequest
+deactivate RoomDTO
+RoomUpdateRequest --> RoomController
+deactivate RoomUpdateRequest
+RoomController -> RoomService : update
+activate RoomService
+RoomService -> RoomDAO : get
+activate RoomDAO
+RoomDAO --> RoomService
+deactivate RoomDAO
+
+alt room not found
+RoomService -> ResourceNotFoundException : new
+activate ResourceNotFoundException
+ResourceNotFoundException --> RoomService
+deactivate ResourceNotFoundException
+RoomService --> RoomController
+RoomController --> Actor
+
+else
+RoomService -> RoomDAO : update
+activate RoomDAO
+RoomDAO --> RoomService
+deactivate RoomDAO
+RoomService --> RoomController
+deactivate RoomService
+return
+
+end
+@enduml

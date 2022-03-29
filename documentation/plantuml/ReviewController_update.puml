@@ -1,0 +1,34 @@
+@startuml
+participant Actor
+Actor -> ReviewController : update
+activate ReviewController
+ReviewController -> ReviewService : update
+activate ReviewService
+ReviewService -> ReviewDAO : get
+activate ReviewDAO
+
+ReviewDAO -> ReviewRepository: get
+activate ReviewRepository
+ReviewRepository --> ReviewDAO
+deactivate ReviewRepository
+
+alt not found
+activate ReviewService
+ReviewService -> ResourceNotFoundException : new
+activate ResourceNotFoundException
+ResourceNotFoundException --> ReviewService
+deactivate ResourceNotFoundException
+ReviewService --> Actor
+deactivate ReviewService
+
+else
+ReviewService -> ReviewDAO : update
+activate ReviewDAO
+ReviewDAO --> ReviewService
+deactivate ReviewDAO
+ReviewService --> ReviewController
+deactivate ReviewService 
+ReviewController --> Actor
+deactivate ReviewController
+end
+@enduml

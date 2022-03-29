@@ -1,0 +1,17 @@
+@startuml
+participant Actor
+Actor -> UserController : checkUsernameAvailability
+activate UserController
+UserController -> UserRepository : existsByUsername
+activate UserRepository
+UserRepository --> UserController
+deactivate UserRepository
+
+alt username does not exist
+UserController -> UserIdentityAvailability : new
+activate UserIdentityAvailability
+UserIdentityAvailability --> UserController
+deactivate UserIdentityAvailability
+return
+end
+@enduml

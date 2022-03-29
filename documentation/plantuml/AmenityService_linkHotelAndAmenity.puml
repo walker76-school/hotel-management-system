@@ -1,0 +1,60 @@
+@startuml
+participant Actor
+Actor -> AmenityController: linkHotelAndAmenity
+activate AmenityController
+AmenityController-> AmenityService : linkHotelAndAmenity
+activate AmenityService
+AmenityService -> HotelDAO : get
+activate HotelDAO
+HotelDAO -> HotelRepository: get
+activate HotelRepository
+HotelRepository --> HotelDAO
+deactivate HotelRepository
+HotelDAO --> AmenityService
+deactivate HotelDAO
+
+alt hotel not found
+
+AmenityService -> ResourceNotFoundException : <<create>>
+activate ResourceNotFoundException
+ResourceNotFoundException --> AmenityService
+deactivate ResourceNotFoundException
+AmenityService --> AmenityController
+deactivate AmenityService
+
+else 
+
+
+AmenityService -> AmenityDAO : get
+activate AmenityDAO
+AmenityDAO -> AmenityRepository : findById
+activate AmenityRepository
+AmenityRepository --> AmenityDAO
+deactivate AmenityRepository
+AmenityDAO --> AmenityService
+deactivate AmenityDAO
+
+alt amenity not found
+
+AmenityService -> ResourceNotFoundException : <<create>>
+activate ResourceNotFoundException
+ResourceNotFoundException --> AmenityService
+deactivate ResourceNotFoundException
+AmenityService --> AmenityController
+deactivate AmenityService
+
+else 
+
+AmenityService -> HotelDAO : update
+activate HotelDAO
+HotelDAO --> AmenityService
+deactivate HotelDAO
+AmenityService -> AmenityDAO : update
+activate AmenityDAO
+AmenityDAO --> AmenityService
+deactivate AmenityDAO
+AmenityService --> AmenityController
+deactivate AmenityService
+end
+end
+@enduml

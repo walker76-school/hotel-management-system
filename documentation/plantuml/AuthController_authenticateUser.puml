@@ -1,0 +1,14 @@
+@startuml
+participant Actor
+Actor -> AuthController : authenticateUser
+activate AuthController
+AuthController -> JwtTokenProvider : generateToken
+activate JwtTokenProvider
+JwtTokenProvider --> AuthController
+deactivate JwtTokenProvider
+AuthController -> JwtAuthenticationResponse : new
+activate JwtAuthenticationResponse
+JwtAuthenticationResponse --> AuthController
+deactivate JwtAuthenticationResponse
+return
+@enduml

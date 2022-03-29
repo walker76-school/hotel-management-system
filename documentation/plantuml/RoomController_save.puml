@@ -1,0 +1,34 @@
+@startuml
+participant Actor
+Actor -> RoomController : save
+activate RoomController
+RoomController -> RoomRequest : toDTO
+activate RoomRequest
+RoomRequest -> RoomDTO : <<create>>
+activate RoomDTO
+RoomDTO --> RoomRequest
+deactivate RoomDTO
+RoomRequest --> RoomController
+deactivate RoomRequest
+RoomController -> RoomService : save
+activate RoomService
+RoomService -> Room : <<create>>
+activate Room
+Room --> RoomService
+deactivate Room
+RoomService -> RoomDAO : save
+activate RoomDAO
+RoomDAO --> RoomService
+deactivate RoomDAO
+RoomService -> Room : toDTO
+activate Room
+Room -> RoomDTO : <<create>>
+activate RoomDTO
+RoomDTO --> Room
+deactivate RoomDTO
+Room --> RoomService
+deactivate Room
+RoomService --> RoomController
+deactivate RoomService
+return
+@enduml

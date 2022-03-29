@@ -1,0 +1,34 @@
+@startuml
+participant Actor
+Actor -> HotelController : save
+activate HotelController
+HotelController -> HotelRequest : toDTO
+activate HotelRequest
+HotelRequest -> HotelDTO : <<create>>
+activate HotelDTO
+HotelDTO --> HotelRequest
+deactivate HotelDTO
+HotelRequest --> HotelController
+deactivate HotelRequest
+HotelController -> HotelService : save
+activate HotelService
+HotelService -> Hotel : <<create>>
+activate Hotel
+Hotel --> HotelService
+deactivate Hotel
+HotelService -> HotelDAO : save
+activate HotelDAO
+HotelDAO --> HotelService
+deactivate HotelDAO
+HotelService -> Hotel : toDTO
+activate Hotel
+Hotel -> HotelDTO : <<create>>
+activate HotelDTO
+HotelDTO --> Hotel
+deactivate HotelDTO
+Hotel --> HotelService
+deactivate Hotel
+HotelService --> HotelController
+deactivate HotelService
+return
+@enduml

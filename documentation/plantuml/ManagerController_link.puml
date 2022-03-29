@@ -1,0 +1,35 @@
+@startuml
+participant Actor
+Actor -> ManagerController : link
+activate ManagerController
+ManagerController -> HotelManagerService : linkHotelAndManager
+activate HotelManagerService
+
+alt hotel not found
+
+activate HotelManagerService
+HotelManagerService -> ResourceNotFoundException : new
+activate ResourceNotFoundException
+ResourceNotFoundException --> HotelManagerService
+deactivate ResourceNotFoundException
+HotelManagerService --> ManagerController
+deactivate HotelManagerService
+
+else
+
+HotelManagerService -> HotelDAO : get
+activate HotelDAO
+HotelDAO --> HotelManagerService
+deactivate HotelDAO
+
+HotelManagerService -> HotelDAO : update
+activate HotelDAO
+HotelDAO --> HotelManagerService
+deactivate HotelDAO
+HotelManagerService --> ManagerController
+deactivate HotelManagerService
+return
+
+end
+
+@enduml

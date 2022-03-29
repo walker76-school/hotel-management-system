@@ -1,0 +1,34 @@
+@startuml
+participant Actor
+Actor -> ReservationController : update
+activate ReservationController
+ReservationController -> ReservationUpdateRequest : toDTO
+activate ReservationUpdateRequest
+ReservationUpdateRequest -> ReservationDTO : new
+activate ReservationDTO
+ReservationDTO --> ReservationUpdateRequest
+deactivate ReservationDTO
+ReservationUpdateRequest --> ReservationController
+deactivate ReservationUpdateRequest
+ReservationController -> ReservationService : update
+activate ReservationService
+ReservationService -> ReservationDAO : get
+activate ReservationDAO
+ReservationDAO --> ReservationService
+deactivate ReservationDAO
+ReservationService -> RoomDAO : get
+activate RoomDAO
+RoomDAO --> ReservationService
+deactivate RoomDAO
+ReservationService -> ReservationDAO : update
+activate ReservationDAO
+ReservationDAO --> ReservationService
+deactivate ReservationDAO
+ReservationService -> RoomDAO : update
+activate RoomDAO
+RoomDAO --> ReservationService
+deactivate RoomDAO
+ReservationService --> ReservationController
+deactivate ReservationService
+return
+@enduml

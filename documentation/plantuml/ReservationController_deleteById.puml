@@ -1,0 +1,14 @@
+@startuml
+participant Actor
+Actor -> ReservationController : deleteById
+activate ReservationController
+ReservationController -> ReservationService : deleteById
+activate ReservationService
+ReservationService -> ReservationDAO : deleteById
+activate ReservationDAO
+ReservationDAO --> ReservationService
+deactivate ReservationDAO
+ReservationService --> ReservationController
+deactivate ReservationService
+return
+@enduml

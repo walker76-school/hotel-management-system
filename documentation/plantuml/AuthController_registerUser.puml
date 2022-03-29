@@ -1,0 +1,54 @@
+@startuml
+participant Actor
+Actor -> AuthController : registerUser
+activate AuthController
+AuthController -> UserRepository : existsByUsername
+activate UserRepository
+UserRepository --> AuthController
+deactivate UserRepository
+
+alt username taken
+
+AuthController -> AppException : new
+activate AppException
+AppException --> AuthController
+deactivate AppException
+AuthController --> Actor
+deactivate AuthController
+
+else 
+
+AuthController -> ApiResponse : new
+activate ApiResponse
+ApiResponse --> AuthController
+deactivate ApiResponse
+AuthController -> Customer : new
+activate Customer
+Customer --> AuthController
+deactivate Customer
+AuthController -> RoleRepository : findByName
+activate RoleRepository
+RoleRepository --> AuthController
+deactivate RoleRepository
+
+alt role does not exist
+
+AuthController -> AppException : new
+activate AppException
+AppException --> AuthController
+deactivate AppException
+AuthController --> Actor
+deactivate AuthController
+
+else 
+
+
+AuthController -> ApiResponse : new
+activate ApiResponse
+ApiResponse --> AuthController
+deactivate ApiResponse
+AuthController --> Actor
+
+end
+end
+@enduml
