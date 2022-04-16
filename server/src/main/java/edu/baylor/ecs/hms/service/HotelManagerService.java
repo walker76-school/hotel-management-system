@@ -1,6 +1,7 @@
 package edu.baylor.ecs.hms.service;
 
 import edu.baylor.ecs.hms.dao.HotelDAO;
+import edu.baylor.ecs.hms.dto.HotelManagerDTO;
 import edu.baylor.ecs.hms.exception.ResourceNotFoundException;
 import edu.baylor.ecs.hms.model.hotel.Hotel;
 import edu.baylor.ecs.hms.model.people.HotelManager;
@@ -18,6 +19,10 @@ public class HotelManagerService {
 
     @Autowired
     private HotelManagerRepository hotelManagerRepository;
+
+    public HotelManagerDTO get(Long id) {
+        return hotelManagerRepository.findById(id).map(HotelManager::toDTO).orElse(null);
+    }
 
     public void linkHotelAndManager(Long hotelId, Long managerId) throws Throwable {
         HotelManager manager = hotelManagerRepository.findById(managerId).orElseThrow((Supplier<Throwable>) () -> new ResourceNotFoundException("hotelmanager", "id", managerId));

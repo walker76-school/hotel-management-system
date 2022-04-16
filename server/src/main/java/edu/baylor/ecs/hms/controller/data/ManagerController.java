@@ -1,13 +1,14 @@
 package edu.baylor.ecs.hms.controller.data;
 
+import edu.baylor.ecs.hms.dto.HotelManagerDTO;
+import edu.baylor.ecs.hms.dto.ReservationDTO;
 import edu.baylor.ecs.hms.payload.request.misc.LinkHotelAndHotelManagerRequest;
 import edu.baylor.ecs.hms.service.HotelManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Collection;
 
 /**
  * Controller for Manager data
@@ -20,6 +21,12 @@ public class ManagerController {
 
     @Autowired
     private HotelManagerService managerService;
+
+    @GetMapping("/{managerId}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public HotelManagerDTO getForId(@PathVariable("managerId") Long managerId) {
+        return managerService.get(managerId);
+    }
 
     /**
      * Link amenity and hotel

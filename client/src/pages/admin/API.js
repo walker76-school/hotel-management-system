@@ -11,3 +11,15 @@ export function refresh() {
         method: 'POST'
     });
 }
+
+export function linkToHotel(linkRequest) {
+    if(!localStorage.getItem(ACCESS_TOKEN)) {
+        return Promise.reject("No access token set.");
+    }
+
+    return request({
+        url: API_BASE_URL + "/manager/link",
+        method: 'POST',
+        body: linkRequest
+    });
+}

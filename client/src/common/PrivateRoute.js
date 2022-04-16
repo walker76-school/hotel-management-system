@@ -1,25 +1,21 @@
-import React, {Component} from 'react';
+import React, {useEffect} from 'react';
 import {
-    Route,
-    Redirect
-  } from "react-router-dom";
+    Outlet,
+    useNavigate
+} from "react-router-dom";
 import {ACCESS_TOKEN} from "../constants";
 
-export default class PrivateRoute extends Component {
+export default function PrivateRoute(props) {
 
-    render() {
-        return (
-            <Route
-                {...this.props}
-                render={() => {
-                    return localStorage.getItem(ACCESS_TOKEN) !== null ? (
-                        this.props.children
-                    ) : (
-                        <Redirect to="/login"/>
-                    )
-                }
-                }
-            />
-        );
-    }
+    const navigate = useNavigate();
+    useEffect(() => {
+        if(localStorage.getItem(ACCESS_TOKEN) === null) {
+            console.log('No access token so not allowed in private routes');
+            navigate('/login');
+        }
+    }, [navigate]);
+
+    return (
+        <Outlet />
+    );
 }

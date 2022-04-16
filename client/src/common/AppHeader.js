@@ -1,114 +1,122 @@
-import React, { Component } from 'react';
-import {
-    Link,
-    withRouter
-} from 'react-router-dom';
-import './AppHeader.css';
-import { Layout, Menu, Dropdown, Icon } from 'antd';
-import {ACCESS_TOKEN} from "../constants";
-import {getCurrentUser} from "../util/APIUtils";
-const Header = Layout.Header;
-    
-class AppHeader extends Component {
-    constructor(props) {
-        super(props);   
-        this.handleMenuClick = this.handleMenuClick.bind(this);
+import * as React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import Button from '@mui/material/Button';
+import {ACCESS_TOKEN} from "constants";
+import {getCurrentUser} from "util/APIUtils";
+import { useNavigate } from "react-router-dom";
+
+export default function AppHeader(props) {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [currentUser, setCurrentUser] = React.useState(null);
+  const [isAuthenticated, setIsAuthenticated] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
+  let navigate = useNavigate();
+
+  const isMenuOpen = Boolean(anchorEl);
+
+  const handleProfileMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    handleMenuClose();
+    props.onLogout();
+  }
+
+  const onLoginClicked = () => {
+    navigate('/login');
+  }
+  
+  const onRegisterClicked = () => {
+    navigate('/signup');
+  }
+
+  const menuId = 'primary-menu';
+  let menuItems;
+  if(props.currentUser) {
+    menuItems = 
+      <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+        <IconButton
+          size="large"
+          edge="end"
+          aria-label="account of current user"
+          aria-controls={menuId}
+          aria-haspopup="true"
+          onClick={handleProfileMenuOpen}
+          color="inherit"
+        >
+          <AccountCircle />
+        </IconButton>
+      </Box>;
+  } else {
+    //Handle if current user is not saved
+    if(localStorage.getItem(ACCESS_TOKEN)) {
+      getCurrentUser().then(response => {
+        console.log(response);
+        setCurrentUser(response);
+        setIsAuthenticated(true);
+        setIsLoading(false);
+      }).catch(error => {
+        setIsLoading(false);
+      });
     }
 
-    handleMenuClick({ key }) {
-      if(key === "logout") {
-        this.props.onLogout();
-      }
-    }
+    menuItems = 
+      <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+        <Button color="inherit" onClick={onLoginClicked}>Login</Button>
+        <Button color="inherit" onClick={onRegisterClicked}>Register</Button>
+      </Box>;
+  }
 
-    render() {
-      let menuItems;
-      if(this.props.currentUser) {
-        menuItems = [
-          <Menu.Item key="/">
-            <Link to="/">
-              <Icon style={{ color: '#3773B0'}} type="home" className="nav-icon" />
-            </Link>
-          </Menu.Item>,
-          <Menu.Item key="/profile" className="profile-menu">
-              <ProfileDropdownMenu 
-                currentUser={this.props.currentUser} 
-                handleMenuClick={this.handleMenuClick}/>
-          </Menu.Item>
-        ]; 
-      } else {
-        //Handle if current user is not saved
-        if(localStorage.getItem(ACCESS_TOKEN)) {
-            getCurrentUser().then(response => {
-                console.log(response);
-                this.setState({
-                    currentUser: response,
-                    isAuthenticated: true,
-                    isLoading: false
-                });
-            }).catch(error => {
-                this.setState({
-                    isLoading: false
-                });
-            });
-        }
-        menuItems = [
-          <Menu.Item key="/login">
-            <Link to="/login">Log In</Link>
-          </Menu.Item>,
-          <Menu.Item key="/signup">
-            <Link to="/signup">Sign Up</Link>
-          </Menu.Item>
-        ];
-      }
-
-      return (
-          <Header className="app-header">
-          <div className="container">
-            <div className="app-title" >
-                <a href="/">
-                    <h4>Hotel Management System</h4>
-                </a>
-            </div>
-            <Menu
-              className="app-menu"
-              mode="horizontal"
-              selectedKeys={[this.props.location.pathname]}
-              style={{ lineHeight: '64px' }} >
-                {menuItems}
-            </Menu>
-          </div>
-        </Header>
-      );
-    }
-}
-
-function ProfileDropdownMenu(props) {
-  const dropdownMenu = (
-    //Dropdown menu creation
-    <Menu onClick={props.handleMenuClick} className="profile-dropdown-menu">
-      <Menu.Item key="user-info" className="dropdown-item" disabled>
-        <div className="username-info">
-          @{props.currentUser.username}
-        </div>
-      </Menu.Item>
-      <Menu.Divider />
-      <Menu.Item key="logout" className="dropdown-item">
-        Logout
-      </Menu.Item>
+  const renderMenu = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      id={menuId}
+      keepMounted
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+    >
+      <MenuItem onClick={handleLogout}>Logout</MenuItem>
+      {/* <MenuItem onClick={handleMenuClose}>My account</MenuItem> */}
     </Menu>
   );
 
   return (
-    <Dropdown 
-      overlay={dropdownMenu} 
-      trigger={['click']}
-      getPopupContainer = { () => document.getElementsByClassName('profile-menu')[0]}>
-      <a className="ant-dropdown-link">
-         <Icon type="user" className="nav-icon" style={{marginRight: 0, color: '#3773B0'}} /> <Icon type="down" />
-      </a>
-    </Dropdown>
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ display: { xs: 'none', sm: 'block' } }}
+          >
+            Hotel Management System
+          </Typography>
+          <Box sx={{ flexGrow: 1 }} />
+          {menuItems}
+        </Toolbar>
+      </AppBar>
+      {renderMenu}
+    </Box>
   );
 }
-
-export default withRouter(AppHeader);

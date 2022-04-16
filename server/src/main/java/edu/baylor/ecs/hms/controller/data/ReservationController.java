@@ -33,6 +33,16 @@ public class ReservationController {
     }
 
     /**
+     * Returns all reservations
+     * @return all reservations
+     */
+    @GetMapping("/{hotelId}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public Collection<ReservationDTO> getAllForHotelId(@PathVariable("hotelId") Long hotelId) {
+        return reservationService.getAllForHotelId(hotelId);
+    }
+
+    /**
      * Saves a reservation
      * @return a reservation
      */

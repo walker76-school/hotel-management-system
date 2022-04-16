@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -36,6 +37,10 @@ public class ReservationService implements IService<ReservationDTO> {
     @Override
     public Collection<ReservationDTO> getAll() {
         return reservationDAO.getAll().stream().map(Reservation::toDTO).collect(Collectors.toList());
+    }
+
+    public Collection<ReservationDTO> getAllForHotelId(Long hotelId) {
+        return reservationDAO.getAll().stream().filter(x -> Objects.equals(x.getRoom().getHotel().getId(), hotelId)).map(Reservation::toDTO).collect(Collectors.toList());
     }
 
     @Override

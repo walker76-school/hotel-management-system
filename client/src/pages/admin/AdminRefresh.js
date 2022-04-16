@@ -1,36 +1,33 @@
-import React, {Component} from 'react';
-import { withRouter} from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import LoadingIndicator from "../../common/LoadingIndicator";
-import {notification} from "antd";
-import { refresh} from "./API";
+import { refresh } from "./API";
 
-class AdminRefresh extends Component {
+export default function AdminRefresh() {
 
-    componentDidMount() {
+    const navigate = useNavigate();
 
+    useEffect(() => {
         refresh()
         .then(result => {
             console.log(result);
-            notification.info({
-                message: 'Hotel Management System',
-                description: "Refreshed data."
-            });
-            this.props.history.push('/');
+            // notification.info({
+            //     message: 'Hotel Management System',
+            //     description: "Refreshed data."
+            // });
+            navigate('/');
         })
         .catch(error => {
-            notification.error({
-                message: 'Hotel Management System',
-                description: "Couldn't refresh data."
-            });
-            this.props.history.push('/');
+            // notification.error({
+            //     message: 'Hotel Management System',
+            //     description: "Couldn't refresh data."
+            // });
+            navigate('/');
         })
-    }
+    }, [navigate]);
 
-    render() {
-        return (
-            <LoadingIndicator />
-        );
-    }
+    return (
+        <LoadingIndicator />
+    );
+    
 }
-
-export default withRouter(AdminRefresh);

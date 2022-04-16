@@ -1,100 +1,114 @@
-/*
-*   Filename: Login.js
-*   Author: Andrew Walker
-*   Date Last Modified: 4/20/2019
-*/
-import React, { Component } from 'react';
+import * as React from 'react';
+import {useState} from 'react';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { login } from '../../util/APIUtils';
-import './Login.css';
-import { Link } from 'react-router-dom';
 import { ACCESS_TOKEN } from '../../constants';
 
-import { Form, Input, Button, Icon, notification } from 'antd';
-const FormItem = Form.Item;
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
+import Stack from '@mui/material/Stack';
 
-class Login extends Component {
-    render() {
-        const AntWrappedLoginForm = Form.create()(LoginForm)
-        return (
-            <div className="login-container">
-                <h1 className="page-title">Login</h1>
-                <div className="login-content">
-                    <AntWrappedLoginForm onLogin={this.props.onLogin} />
-                </div>
-            </div>
-        );
-    }
-}
+const theme = createTheme();
 
-class LoginForm extends Component {
-    constructor(props) {
-        super(props);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
+export default function SignIn(props) {
 
-    handleSubmit(event) {
-        event.preventDefault();   
-        this.props.form.validateFields((err, values) => {
-            if (!err) {
-                const loginRequest = Object.assign({}, values);
-                login(loginRequest)
-                .then(response => {
-                    localStorage.setItem(ACCESS_TOKEN, response.accessToken);
-                    this.props.onLogin();
-                }).catch(error => {
-                    if(error.status === 401) {
-                        notification.error({
-                            message: 'Hotel Management System',
-                            description: 'Your Username or Password is incorrect. Please try again!'
-                        });                    
-                    } else {
-                        notification.error({
-                            message: 'Hotel Management System',
-                            description: error.message || 'Sorry! Something went wrong. Please try again!'
-                        });                                            
-                    }
-                });
+    let [alert, setAlert] = useState(null);
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const data = new FormData(event.currentTarget);
+        const loginRequest = {
+            username: data.get('username'),
+            password: data.get('password'),
+        }
+        console.log('loginRquest', loginRequest);
+
+        login(loginRequest)
+        .then(response => {
+            localStorage.setItem(ACCESS_TOKEN, response.accessToken);
+            props.onLogin();
+        }).catch(error => {
+            if(error.status === 401) {
+                setAlert(
+                    <Alert severity="error">
+                        <AlertTitle>Error</AlertTitle>
+                        Your Username or Password is incorrect. <strong>Please try again!</strong>
+                    </Alert>
+                );               
+            } else {
+                setAlert(
+                    <Alert severity="error">
+                        <AlertTitle>Error</AlertTitle>
+                        Sorry! Something went wrong. Please try again!
+                    </Alert>
+                );                                      
             }
         });
-    }
-
-    render() {
-        const { getFieldDecorator } = this.props.form;
-        return (
-            <Form onSubmit={this.handleSubmit} className="login-form">
-                <FormItem>
-                    {getFieldDecorator('username', {
-                        rules: [{ required: true, message: 'Please input your username ' }],
-                    })(
-                    <Input 
-                        prefix={<Icon type="user" />}
-                        size="large"
-                        name="username"
-                        placeholder="Username" />
-                    )}
-                </FormItem>
-
-                <FormItem>
-                {getFieldDecorator('password', {
-                    rules: [{ required: true, message: 'Please input your Password!' }],
-                })(
-                    <Input 
-                        prefix={<Icon type="lock" />}
-                        size="large"
-                        name="password" 
-                        type="password" 
-                        placeholder="Password"  />                        
-                )}
-                </FormItem>
-
-                <FormItem>
-                    <Button style={{ backgroundColor: '#3773B0'}} type="primary" htmlType="submit" size="large" className="login-form-button">Login</Button>
-                    Or <Link style={{color: '#3773B0'}} to="/signup">register now!</Link>
-                </FormItem>
-            </Form>
-        );
-    }
-}
-
-
-export default Login;
+    };
+  
+    return (
+      <ThemeProvider theme={theme}>
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <Stack sx={{ width: '100%' }} spacing={2}>{alert}</Stack>
+          <Box
+            sx={{
+              marginTop: 8,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            <Typography component="h1" variant="h5">
+              Sign in
+            </Typography>
+            <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="username"
+                label="Username"
+                name="username"
+                autoComplete="username"
+                autoFocus
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Sign In
+              </Button>
+              <Grid container>
+                <Grid item>
+                  <Link href="/signup" variant="body2">
+                    {"Don't have an account? Sign Up"}
+                  </Link>
+                </Grid>
+              </Grid>
+            </Box>
+          </Box>
+        </Container>
+      </ThemeProvider>
+    );
+  }

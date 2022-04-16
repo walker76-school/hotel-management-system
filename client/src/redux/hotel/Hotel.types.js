@@ -1,0 +1,1 @@
+export const SET_CURRENT_HOTEL_ID = 'hotel/setHotelId';
