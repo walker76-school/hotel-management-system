@@ -1,18 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-export default function Home(props) {
+function Home(props) {
 
     let navigate = useNavigate();
 
-    console.log(props.user);
-    let roles = props.user != null ? props.user.roleName : ['ROLE_USER'];
-
-    if(roles.includes("ROLE_ADMIN")) {
-        console.log("navigating to admin panel");
-        navigate("/admin/viewreservations");
-        return (<div></div>);
-    }
+    useEffect(() => {
+        console.log(props.currentUser);
+        let roles = props.currentUser != null ? props.currentUser.roleName : ['ROLE_USER'];
+    
+        if(roles.includes("ROLE_ADMIN")) {
+            console.log("navigating to admin panel");
+            navigate("/admin/viewreservations");
+        }
+    }, [navigate]);
 
     return (
         <div>
@@ -20,3 +22,9 @@ export default function Home(props) {
         </div>
     );
 }
+
+const mapStateToProps = (state) => ({
+    currentUser: state.user.currentUser 
+})
+
+export default connect(mapStateToProps)(Home);

@@ -1,11 +1,16 @@
 import {SET_CURRENT_HOTEL_ID} from './Hotel.types';
 
-export default function hotelReducer(state = { 
-    currentHotelId: -1
-}, action) {
+const initialState = {
+  currentHotelId: -1
+}
+
+export default function hotelReducer(state = initialState, action) {
     switch (action.type) {
       case SET_CURRENT_HOTEL_ID:
-        return { currentHotelId: action.currentHotelId }
+        return { 
+          ...state,
+          currentHotelId: action.payload 
+        }
       default:
         return state
     }

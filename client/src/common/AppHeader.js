@@ -11,8 +11,11 @@ import Button from '@mui/material/Button';
 import {ACCESS_TOKEN} from "constants";
 import {getCurrentUser} from "util/APIUtils";
 import { useNavigate } from "react-router-dom";
+import { connect } from 'react-redux';
+import { setCurrentUser } from 'redux/user/User.actions';
 
-export default function AppHeader(props) {
+function AppHeader(props) {
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [currentUser, setCurrentUser] = React.useState(null);
   const [isAuthenticated, setIsAuthenticated] = React.useState(false);
@@ -44,7 +47,7 @@ export default function AppHeader(props) {
 
   const menuId = 'primary-menu';
   let menuItems;
-  if(props.currentUser) {
+  if(props.currentUser !== null) {
     menuItems = 
       <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
         <IconButton
@@ -60,17 +63,17 @@ export default function AppHeader(props) {
         </IconButton>
       </Box>;
   } else {
-    //Handle if current user is not saved
-    if(localStorage.getItem(ACCESS_TOKEN)) {
-      getCurrentUser().then(response => {
-        console.log(response);
-        setCurrentUser(response);
-        setIsAuthenticated(true);
-        setIsLoading(false);
-      }).catch(error => {
-        setIsLoading(false);
-      });
-    }
+    // //Handle if current user is not saved
+    // if(localStorage.getItem(ACCESS_TOKEN)) {
+    //   getCurrentUser()
+    //   .then(response => {
+    //     console.log(response);
+    //     setCurrentUser(response);
+    //     setIsLoading(false);
+    //   }).catch(error => {
+    //     setIsLoading(false);
+    //   });
+    // }
 
     menuItems = 
       <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
@@ -120,3 +123,9 @@ export default function AppHeader(props) {
     </Box>
   );
 }
+
+const mapStateToProps = (state) => ({
+  currentUser: state.user.currentUser 
+})
+
+export default connect(mapStateToProps)(AppHeader);

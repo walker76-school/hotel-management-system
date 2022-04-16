@@ -20,6 +20,6 @@ export function linkToHotel(linkRequest) {
     return request({
         url: API_BASE_URL + "/manager/link",
         method: 'POST',
-        body: linkRequest
+        body: JSON.stringify(linkRequest)
     });
 }

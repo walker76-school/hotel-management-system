@@ -1,19 +1,7 @@
 import { combineReducers } from 'redux';
 
-import hotelReducer from './hotel/Hotel.reducer';
-
-function userReducer(state = { 
-    currentUser: null 
-}, action) {
-    switch (action.type) {
-      case 'user/setUser':
-        return { currentUser: action.currentUser }
-      case 'user/logout':
-        return { currentUser: null }
-      default:
-        return state
-    }
-}
+import hotelReducer from 'redux/hotel/Hotel.reducer';
+import userReducer from 'redux/user/User.reducer';
 
 const rootReducer = combineReducers({
     hotel: hotelReducer,
