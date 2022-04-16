@@ -20,6 +20,7 @@ import AdminRefresh from "pages/admin/AdminRefresh";
 import ManagerCreateReservation from 'pages/createreservation/manager/ManagerCreateReservation';
 import ManagerViewReservations from 'pages/viewreservations/manager/ManagerViewReservations';
 import LinkToHotel from 'pages/admin/LinkToHotel';
+import CreateHotelScaffold from 'pages/hotel/CreateHotelScaffold';
 import { connect } from 'react-redux';
 import { setCurrentUser, logout } from 'redux/user/User.actions';
 
@@ -100,6 +101,7 @@ function App(props) {
                             <Route path="createreservation" element={<ManagerCreateReservation />}/>
                             <Route path="viewreservations" element={<ManagerViewReservations />}/>
                             <Route path="link" element={<LinkToHotel />}/>
+                            <Route path="hotel/create" element={<CreateHotelScaffold />}/>
                             <Route path="refresh" element={<AdminRefresh />}/>
                         </Route>
                     </Routes>

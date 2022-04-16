@@ -34,7 +34,6 @@ function LinkToHotel(props) {
 
         linkToHotel(linkToHotelRequest)
             .then(response => {
-                localStorage.setItem(ACCESS_TOKEN, response.accessToken);
                 navigate('admin/viewreservations')
             }).catch(error => {
                 setAlert(
@@ -81,6 +80,7 @@ function LinkToHotel(props) {
                 label="Hotel ID"
                 name="hotelId"
                 autoComplete="hotelId"
+                value={props.currentHotelId !== -1 ? props.currentHotelId : ""}
                 autoFocus
               />
               <Button
@@ -100,7 +100,8 @@ function LinkToHotel(props) {
 
   
 const mapStateToProps = (state) => ({
-    currentUser: state.user.currentUser
+    currentUser: state.user.currentUser,
+    currentHotelId: state.hotel.currentHotelId 
 })
 
 export default connect(mapStateToProps)(LinkToHotel);

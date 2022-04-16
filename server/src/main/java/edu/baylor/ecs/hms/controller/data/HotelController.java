@@ -1,6 +1,7 @@
 package edu.baylor.ecs.hms.controller.data;
 
 import edu.baylor.ecs.hms.dto.HotelDTO;
+import edu.baylor.ecs.hms.payload.request.create.CreateScaffoldHotelRequest;
 import edu.baylor.ecs.hms.payload.request.create.HotelRequest;
 import edu.baylor.ecs.hms.payload.request.update.HotelUpdateRequest;
 import edu.baylor.ecs.hms.service.HotelService;
@@ -40,6 +41,16 @@ public class HotelController {
     @PreAuthorize("hasRole('ADMIN')")
     public HotelDTO save(@RequestBody HotelRequest hotelRequest) {
         return hotelService.save(hotelRequest.toDTO());
+    }
+
+    /**
+     * Save a hotel
+     * @return a saved hotel
+     */
+    @PostMapping("/construct")
+    @PreAuthorize("hasRole('ADMIN')")
+    public HotelDTO save(@RequestBody CreateScaffoldHotelRequest hotelRequest) {
+        return hotelService.construct(hotelRequest);
     }
 
     /**

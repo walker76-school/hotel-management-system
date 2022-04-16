@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.Optional;
+import java.util.Set;
 
 @Component
 public class RoomDAO implements DAO<Room> {
@@ -42,5 +43,9 @@ public class RoomDAO implements DAO<Room> {
     @Override
     public void deleteById(Long id) {
         roomRepository.deleteById(id);
+    }
+
+    public void saveAll(Set<Room> rooms) {
+        roomRepository.saveAll(rooms);
     }
 }

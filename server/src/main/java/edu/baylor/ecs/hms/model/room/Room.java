@@ -41,7 +41,7 @@ public class Room {
     private Long id;
 
     @NotNull
-    private Long roomNumber;
+    private String roomNumber;
 
     @NotNull
     private Long floorNumber;
@@ -63,6 +63,13 @@ public class Room {
         this.roomNumber = dto.getRoomNumber();
         this.floorNumber = dto.getFloorNumber();
         this.status = dto.getStatus();
+    }
+
+    public Room(String roomNumber, Long floorNumber, RoomStatus status, Hotel hotel) {
+        this.roomNumber = roomNumber;
+        this.floorNumber = floorNumber;
+        this.status = status;
+        this.hotel = hotel;
     }
 
     public RoomDTO toDTO() {

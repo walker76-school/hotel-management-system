@@ -23,7 +23,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class RoomDTO {
     private Long id;
-    private Long roomNumber;
+    private String roomNumber;
     private Long floorNumber;
     private RoomStatus status;
 

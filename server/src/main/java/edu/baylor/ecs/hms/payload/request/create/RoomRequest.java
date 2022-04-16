@@ -22,7 +22,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RoomRequest {
-    private Long roomNumber;
+    private String roomNumber;
     private Long floorNumber;
     private RoomStatus status;
 

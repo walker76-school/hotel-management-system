@@ -1,13 +1,19 @@
 package edu.baylor.ecs.hms.service;
 
 import edu.baylor.ecs.hms.dao.HotelDAO;
+import edu.baylor.ecs.hms.dao.RoomDAO;
 import edu.baylor.ecs.hms.dto.HotelDTO;
 import edu.baylor.ecs.hms.exception.ResourceNotFoundException;
 import edu.baylor.ecs.hms.model.hotel.Hotel;
+import edu.baylor.ecs.hms.model.room.Room;
+import edu.baylor.ecs.hms.model.room.RoomStatus;
+import edu.baylor.ecs.hms.model.room.RoomStatusName;
+import edu.baylor.ecs.hms.payload.request.create.CreateScaffoldHotelRequest;
+import edu.baylor.ecs.hms.repository.RoomStatusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
+import java.util.*;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -16,6 +22,12 @@ public class HotelService implements IService<HotelDTO> {
 
     @Autowired
     HotelDAO hotelDAO;
+
+    @Autowired
+    RoomDAO roomDAO;
+
+    @Autowired
+    RoomStatusRepository roomStatusRepository;
 
     @Override
     public HotelDTO get(Long id) {
@@ -54,5 +66,32 @@ public class HotelService implements IService<HotelDTO> {
     @Override
     public void deleteById(Long id) {
         hotelDAO.deleteById(id);
+    }
+
+    public HotelDTO construct(CreateScaffoldHotelRequest hotelRequest) {
+        HotelDTO dto = save(hotelRequest.toDTO());
+
+        Optional<Hotel> hotelOpt = hotelDAO.get(dto.getId());
+        if(hotelOpt.isPresent()) {
+            Hotel hotel = hotelOpt.get();
+            Optional<RoomStatus> pendingStatusOpt = roomStatusRepository.findByName(RoomStatusName.ROOM_STATUS_VACANT);
+            if(pendingStatusOpt.isPresent()){
+                RoomStatus pendingStatus = pendingStatusOpt.get();
+                Set<Room> rooms = new HashSet<>();
+                for (int i = 0; i < hotelRequest.getNumFloors(); i++) {
+                    for (int j = 0; j < hotelRequest.getNumRooms(); j++) {
+                        String roomNumber = "" + hotel.getId() + i + "00" + j;
+                        Room room = new Room(roomNumber, (long) i, pendingStatus, hotel);
+                        rooms.add(room);
+                    }
+                }
+                hotel.setRooms(rooms);
+                roomDAO.saveAll(rooms);
+                hotelDAO.update(hotel);
+
+                return hotel.toDTO();
+            }
+        }
+        return null;
     }
 }
