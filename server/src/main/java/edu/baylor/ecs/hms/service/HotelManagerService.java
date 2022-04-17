@@ -24,7 +24,7 @@ public class HotelManagerService {
         return hotelManagerRepository.findById(id).map(HotelManager::toDTO).orElse(null);
     }
 
-    public void linkHotelAndManager(Long hotelId, Long managerId) throws Throwable {
+    public HotelManagerDTO linkHotelAndManager(Long hotelId, Long managerId) throws Throwable {
         HotelManager manager = hotelManagerRepository.findById(managerId).orElseThrow((Supplier<Throwable>) () -> new ResourceNotFoundException("hotelmanager", "id", managerId));
         Hotel hotel = hotelDAO.get(hotelId).orElseThrow((Supplier<Throwable>) () -> new ResourceNotFoundException("hotel", "id", hotelId));
 
@@ -33,5 +33,7 @@ public class HotelManagerService {
 
         hotelManagerRepository.save(manager);
         hotelDAO.update(hotel);
+
+        return manager.toDTO();
     }
 }

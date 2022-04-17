@@ -134,7 +134,6 @@ function CreateHotelScaffold(props) {
 
         createHotelScaffold(createHotelScaffoldRequest)
             .then(response => {
-                console.log('.then');
                 setAlert(
                     <Alert severity="success">
                         <AlertTitle>Success</AlertTitle>
@@ -146,9 +145,10 @@ function CreateHotelScaffold(props) {
                 if(props.currentHotelId === -1) {
                     props.setCurrentHotelIdFn(response.id);
                     navigate("/admin/link");
+                    
+                } else {
+                    navigate("/admin/viewreservations");
                 }
-
-                navigate("/admin/viewreservations");
             }).catch(error => {
                 setAlert(
                     <Alert severity="error">

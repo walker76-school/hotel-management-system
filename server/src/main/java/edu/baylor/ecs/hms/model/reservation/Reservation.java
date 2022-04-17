@@ -3,6 +3,7 @@ package edu.baylor.ecs.hms.model.reservation;
 import edu.baylor.ecs.hms.dto.ReservationDTO;
 import edu.baylor.ecs.hms.model.people.Customer;
 import edu.baylor.ecs.hms.model.room.Room;
+import edu.baylor.ecs.hms.payload.response.ReservationContract;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -47,6 +48,10 @@ public class Reservation {
     }
 
     public ReservationDTO toDTO() {
-        return new ReservationDTO(id, startDate, endDate, customer.getId(), room.getId());
+        return new ReservationDTO(id, startDate, endDate, customer.getUsername(), room.getId());
+    }
+
+    public ReservationContract toContract() {
+        return new ReservationContract(id, startDate, endDate, customer.getUsername(), room.getRoomNumber(), room.getId(), room.getHotel().getName(), room.getHotel().getId());
     }
 }

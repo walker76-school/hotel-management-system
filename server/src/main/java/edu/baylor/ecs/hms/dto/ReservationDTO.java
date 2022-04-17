@@ -15,6 +15,6 @@ public class ReservationDTO {
     private Long id;
     private Instant startDate;
     private Instant endDate;
-    private Long customerId;
+    private String customerUsername;
     private Long roomId;
 }

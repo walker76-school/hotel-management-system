@@ -4,6 +4,8 @@ import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -22,6 +24,8 @@ function LinkToHotel(props) {
 
     const navigate = useNavigate();
     let [alert, setAlert] = useState(null);
+    let [managerId, setManagerId] = useState(props.currentUser !== null ? props.currentUser.id : "");
+    let [hotelId, setHotelId] = useState(props.currentHotelId !== -1 ? props.currentHotelId : "");
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -34,7 +38,7 @@ function LinkToHotel(props) {
 
         linkToHotel(linkToHotelRequest)
             .then(response => {
-                navigate('admin/viewreservations')
+                navigate('/admin/viewreservations')
             }).catch(error => {
                 setAlert(
                     <Alert severity="error">
@@ -70,7 +74,8 @@ function LinkToHotel(props) {
                 label="Manager ID"
                 name="managerId"
                 autoComplete="managerId"
-                value={props.currentUser !== null ? props.currentUser.id : ""}
+                onChange={(event) => setManagerId(event.target.value)}
+                value={managerId}
               />
               <TextField
                 margin="normal"
@@ -80,7 +85,8 @@ function LinkToHotel(props) {
                 label="Hotel ID"
                 name="hotelId"
                 autoComplete="hotelId"
-                value={props.currentHotelId !== -1 ? props.currentHotelId : ""}
+                value={hotelId}
+                onChange={(event) => setHotelId(event.target.value)}
                 autoFocus
               />
               <Button
@@ -91,6 +97,13 @@ function LinkToHotel(props) {
               >
                 Link
               </Button>
+              <Grid container>
+                <Grid item>
+                  <Link href="/admin/hotel/create" variant="body2">
+                    {"No Hotel Available? Create One"}
+                  </Link>
+                </Grid>
+              </Grid>
             </Box>
           </Box>
         </Container>

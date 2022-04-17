@@ -33,7 +33,7 @@ public class ManagerController {
      */
     @PostMapping("/link")
     @PreAuthorize("hasRole('ADMIN')")
-    public void link(@RequestBody LinkHotelAndHotelManagerRequest linkRequest) throws Throwable {
-        managerService.linkHotelAndManager(linkRequest.getHotelId(), linkRequest.getManagerId());
+    public HotelManagerDTO link(@RequestBody LinkHotelAndHotelManagerRequest linkRequest) throws Throwable {
+        return managerService.linkHotelAndManager(linkRequest.getHotelId(), linkRequest.getManagerId());
     }
 }

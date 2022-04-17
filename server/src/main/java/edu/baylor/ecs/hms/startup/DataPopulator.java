@@ -5,6 +5,11 @@
 
 package edu.baylor.ecs.hms.startup;
 
+import edu.baylor.ecs.hms.exception.AppException;
+import edu.baylor.ecs.hms.model.auth.Role;
+import edu.baylor.ecs.hms.model.auth.RoleName;
+import edu.baylor.ecs.hms.model.auth.User;
+import edu.baylor.ecs.hms.model.people.HotelManager;
 import org.hibernate.annotations.common.util.impl.LoggerFactory;
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +18,9 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Populates initial data in the DB if needed
@@ -55,8 +63,6 @@ public class DataPopulator implements ApplicationListener<ContextRefreshedEvent>
     public void setup() {
 
         logger.info("Beginning Setup ... ");
-
-        // Setup event
 
         logger.info("End Setup");
 

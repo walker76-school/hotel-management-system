@@ -7,6 +7,7 @@ import edu.baylor.ecs.hms.exception.ResourceNotFoundException;
 import edu.baylor.ecs.hms.model.people.Customer;
 import edu.baylor.ecs.hms.model.reservation.Reservation;
 import edu.baylor.ecs.hms.model.room.Room;
+import edu.baylor.ecs.hms.payload.response.ReservationContract;
 import edu.baylor.ecs.hms.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,14 +40,14 @@ public class ReservationService implements IService<ReservationDTO> {
         return reservationDAO.getAll().stream().map(Reservation::toDTO).collect(Collectors.toList());
     }
 
-    public Collection<ReservationDTO> getAllForHotelId(Long hotelId) {
-        return reservationDAO.getAll().stream().filter(x -> Objects.equals(x.getRoom().getHotel().getId(), hotelId)).map(Reservation::toDTO).collect(Collectors.toList());
+    public Collection<ReservationContract> getAllForHotelId(Long hotelId) {
+        return reservationDAO.getAll().stream().filter(x -> Objects.equals(x.getRoom().getHotel().getId(), hotelId)).map(Reservation::toContract).collect(Collectors.toList());
     }
 
     @Override
     public ReservationDTO save(ReservationDTO reservationDTO) {
         Reservation reservation = new Reservation(reservationDTO);
-        Optional<Customer> customerOptional = customerRepository.findById(reservationDTO.getCustomerId());
+        Optional<Customer> customerOptional = customerRepository.findByUsername(reservationDTO.getCustomerUsername());
         if(customerOptional.isPresent()) {
             Customer customer = customerOptional.get();
 
@@ -68,7 +69,7 @@ public class ReservationService implements IService<ReservationDTO> {
                 throw new ResourceNotFoundException("room", "roomId", reservationDTO.getRoomId());
             }
         } else {
-            throw new ResourceNotFoundException("user", "customerId", reservationDTO.getCustomerId());
+            throw new ResourceNotFoundException("user", "username", reservationDTO.getCustomerUsername());
         }
     }
 

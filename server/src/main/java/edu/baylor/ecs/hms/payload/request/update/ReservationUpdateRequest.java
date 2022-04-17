@@ -16,10 +16,10 @@ public class ReservationUpdateRequest {
     private Long id;
     private Instant startDate;
     private Instant endDate;
-    private Long customerNumber;
+    private String customerUsername;
     private Long roomNumber;
 
     public ReservationDTO toDTO() {
-        return new ReservationDTO(id, startDate, endDate, customerNumber, roomNumber);
+        return new ReservationDTO(id, startDate, endDate, customerUsername, roomNumber);
     }
 }

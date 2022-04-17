@@ -3,6 +3,7 @@ package edu.baylor.ecs.hms.controller.data;
 import edu.baylor.ecs.hms.dto.ReservationDTO;
 import edu.baylor.ecs.hms.payload.request.create.ReservationRequest;
 import edu.baylor.ecs.hms.payload.request.update.ReservationUpdateRequest;
+import edu.baylor.ecs.hms.payload.response.ReservationContract;
 import edu.baylor.ecs.hms.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -36,9 +37,9 @@ public class ReservationController {
      * Returns all reservations
      * @return all reservations
      */
-    @GetMapping("/{hotelId}")
+    @GetMapping("/byHotelId/{hotelId}")
     @PreAuthorize("hasRole('ADMIN')")
-    public Collection<ReservationDTO> getAllForHotelId(@PathVariable("hotelId") Long hotelId) {
+    public Collection<ReservationContract> getAllForHotelId(@PathVariable("hotelId") Long hotelId) {
         return reservationService.getAllForHotelId(hotelId);
     }
 

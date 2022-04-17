@@ -98,10 +98,10 @@ function App(props) {
                         <Route path="login" element={<Login onLogin={handleLogin} {...props} />}/>
                         <Route path="error" element={<NotFound />}/>
                         <Route path="admin" element={<PrivateRoute />}>
-                            <Route path="createreservation" element={<ManagerCreateReservation />}/>
                             <Route path="viewreservations" element={<ManagerViewReservations />}/>
-                            <Route path="link" element={<LinkToHotel />}/>
                             <Route path="hotel/create" element={<CreateHotelScaffold />}/>
+                            <Route path="reservation/create" element={<ManagerCreateReservation />}/>
+                            <Route path="link" element={<LinkToHotel />}/>
                             <Route path="refresh" element={<AdminRefresh />}/>
                         </Route>
                     </Routes>
