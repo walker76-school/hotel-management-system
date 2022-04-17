@@ -112,6 +112,7 @@ function AppHeader(props) {
             noWrap
             component="div"
             sx={{ display: { xs: 'none', sm: 'block' } }}
+            onClick={() => navigate("/")}
           >
             Hotel Management System
           </Typography>

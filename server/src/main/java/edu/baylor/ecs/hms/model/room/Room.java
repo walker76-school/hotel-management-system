@@ -52,7 +52,7 @@ public class Room {
             inverseJoinColumns = @JoinColumn(name = "status_id"))
     private RoomStatus status = null;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<Reservation> reservations = new HashSet<>();
 
     @ManyToOne

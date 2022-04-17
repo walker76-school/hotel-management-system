@@ -13,7 +13,6 @@ export function getManagerInfo(managerId) {
     });
 }
 
-
 export function getReservationsByHotelId(hotelId) {
     if(!localStorage.getItem(ACCESS_TOKEN)) {
         return Promise.reject("No access token set.");
@@ -22,5 +21,16 @@ export function getReservationsByHotelId(hotelId) {
     return request({
         url: API_BASE_URL + "/reservation/byHotelId/" + hotelId,
         method: 'GET'
+    });
+}
+
+export function cancelReservationById(reservationId) {
+    if(!localStorage.getItem(ACCESS_TOKEN)) {
+        return Promise.reject("No access token set.");
+    }
+
+    return request({
+        url: API_BASE_URL + "/reservation/" + reservationId,
+        method: 'DELETE'
     });
 }

@@ -12,7 +12,7 @@ function Home(props) {
     
         if(roles.includes("ROLE_ADMIN")) {
             console.log("navigating to admin panel");
-            navigate("/admin/viewreservations");
+            navigate("/admin/reservation/view");
         }
     }, [navigate]);
 

@@ -147,7 +147,7 @@ function CreateHotelScaffold(props) {
                     navigate("/admin/link");
                     
                 } else {
-                    navigate("/admin/viewreservations");
+                    navigate("/admin/reservation/view");
                 }
             }).catch(error => {
                 setAlert(

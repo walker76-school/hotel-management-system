@@ -9,5 +9,5 @@ public interface IService<T> {
     T save(T t) throws Throwable;
     void update(T t) throws Throwable;
     void delete(T t) throws Throwable;
-    void deleteById(Long id);
+    void deleteById(Long id) throws Throwable;
 }

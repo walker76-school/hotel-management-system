@@ -38,7 +38,7 @@ function LinkToHotel(props) {
 
         linkToHotel(linkToHotelRequest)
             .then(response => {
-                navigate('/admin/viewreservations')
+                navigate('/admin/reservation/view')
             }).catch(error => {
                 setAlert(
                     <Alert severity="error">

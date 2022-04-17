@@ -1,6 +1,5 @@
 package edu.baylor.ecs.hms.payload.response;
 
-import edu.baylor.ecs.hms.dto.ReservationDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

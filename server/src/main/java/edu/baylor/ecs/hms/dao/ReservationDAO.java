@@ -1,7 +1,9 @@
 package edu.baylor.ecs.hms.dao;
 
 import edu.baylor.ecs.hms.model.reservation.Reservation;
+import edu.baylor.ecs.hms.repository.HotelRepository;
 import edu.baylor.ecs.hms.repository.ReservationRepository;
+import edu.baylor.ecs.hms.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +15,12 @@ public class ReservationDAO implements DAO<Reservation> {
 
     @Autowired
     ReservationRepository reservationRepository;
+
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    HotelRepository hotelRepository;
 
     @Override
     public Optional<Reservation> get(Long id) {

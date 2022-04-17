@@ -79,7 +79,7 @@ public class ReservationController {
      */
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('USER')")
-    public void deleteById(@PathVariable(value = "id") Long id) {
+    public void deleteById(@PathVariable(value = "id") Long id) throws Throwable {
         reservationService.deleteById(id);
     }
 }

@@ -17,23 +17,23 @@ import * as moment from 'moment';
 
 const theme = createTheme();
 
-function ManagerCreateReservation(props) {
+function ManagerModifyReservation(props) {
 
     const navigate = useNavigate();
 
     let [alert, setAlert] = useState(null);
 
     let [customerUsername, setCustomerUsername] = useState({
-        value: ''
+        value: props.currentReservation.customerUsername
     });
     let [startDate, setStartDate] = useState({
-        value: ''
+        value: props.currentReservation.startDate
     });
     let [endDate, setEndDate] = useState({
-        value: ''
+        value: props.currentReservation.endDate
     });
     let [roomId, setRoomId] = useState({
-        value: ''
+        value: props.currentReservation.roomId
     });
 
     const setters = {
@@ -205,11 +205,12 @@ function ManagerCreateReservation(props) {
   
 const mapStateToProps = (state) => ({
     currentUser: state.user.currentUser,
-    currentHotelId: state.hotel.currentHotelId 
+    currentHotelId: state.hotel.currentHotelId,
+    currentReservation: state.reservation.currentReservation
 })
 
 const mapDispatchToProps = (dispatch) => {
     return {}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ManagerCreateReservation);
+export default connect(mapStateToProps, mapDispatchToProps)(ManagerModifyReservation);

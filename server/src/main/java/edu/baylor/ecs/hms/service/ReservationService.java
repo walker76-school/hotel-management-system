@@ -1,5 +1,6 @@
 package edu.baylor.ecs.hms.service;
 
+import edu.baylor.ecs.hms.dao.HotelDAO;
 import edu.baylor.ecs.hms.dao.ReservationDAO;
 import edu.baylor.ecs.hms.dao.RoomDAO;
 import edu.baylor.ecs.hms.dto.ReservationDTO;
@@ -29,6 +30,9 @@ public class ReservationService implements IService<ReservationDTO> {
 
     @Autowired
     private RoomDAO roomDAO;
+
+    @Autowired
+    private HotelDAO hotelDAO;
 
     @Override
     public ReservationDTO get(Long id) {
@@ -95,7 +99,19 @@ public class ReservationService implements IService<ReservationDTO> {
     }
 
     @Override
-    public void deleteById(Long id) {
-        reservationDAO.deleteById(id);
+    public void deleteById(Long id) throws Throwable {
+        Reservation reservation = reservationDAO.get(id).orElseThrow((Supplier<Throwable>) () -> new ResourceNotFoundException("reservation", "id", id));
+        Room room = roomDAO.get(reservation.getRoom().getId()).orElseThrow((Supplier<Throwable>) () -> new ResourceNotFoundException("room", "id", reservation.getRoom().getId()));
+        Optional<Customer> customerOptional = customerRepository.findById(reservation.getCustomer().getId());
+        if(customerOptional.isPresent()) {
+            Customer customer = customerOptional.get();
+
+            customer.getReservations().remove(reservation);
+            room.getReservations().remove(reservation);
+            customerRepository.save(customer);
+            roomDAO.update(room);
+
+            reservationDAO.deleteById(id);
+        }
     }
 }

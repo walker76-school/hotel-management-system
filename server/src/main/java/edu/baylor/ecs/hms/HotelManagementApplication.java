@@ -36,11 +36,7 @@ import java.util.TimeZone;
 @ComponentScan(basePackages = { "edu.baylor.ecs.hms.*" })
 public class HotelManagementApplication {
 
-    @Value("${app.admin.username}")
-    private String adminUsername;
 
-    @Value("${app.admin.password}")
-    private String adminPassword;
 
     /**
      * Sets timezone of application
@@ -87,31 +83,7 @@ public class HotelManagementApplication {
             @Override
             public void run(String... args) {
 
-                // create admin account if not exists
-                if (!userRepository.existsByUsername(adminUsername)) {
-                    User admin = new HotelManager();
-                    admin.setUsername(adminUsername);
-                    admin.setPassword(passwordEncoder.encode(adminPassword));
 
-                    Role adminRole = roleRepository.findByName(RoleName.ROLE_ADMIN)
-                            .orElseThrow(() -> new AppException("Admin Role not set."));
-                    Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
-                            .orElseThrow(() -> new AppException("User Role not set."));
-
-                    Set<Role> roles = new HashSet<>();
-                    roles.add(adminRole);
-                    roles.add(userRole);
-
-                    admin.setRoles(roles);
-
-                    admin.setFirstName("admin");
-                    admin.setLastName("admin");
-                    admin.setEmail("admin@email.com");
-                    admin.setPhoneNumber("1234567890");
-                    admin.setAge(100L);
-
-                    userRepository.save(admin);
-                }
 
             }
         };

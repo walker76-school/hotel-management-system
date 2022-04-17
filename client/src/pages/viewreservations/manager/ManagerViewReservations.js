@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
-import { getManagerInfo, getReservationsByHotelId } from "./API";
+import { cancelReservationById, getManagerInfo, getReservationsByHotelId } from "./API";
 import {setCurrentHotelId} from 'redux/hotel/Hotel.actions';
 import { connect } from "react-redux";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -14,6 +14,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
 import * as moment from 'moment';
+import { setCurrentReservation } from "redux/reservation/Reservation.actions";
 
 const theme = createTheme();
 
@@ -44,6 +45,12 @@ function ManagerViewReservations(props) {
     }, [navigate]);
 
     useEffect(() => {
+        fetchReservations();
+    }, [props.currentHotelId])
+
+    console.log("ManagerViewReservations");
+
+    const fetchReservations = () => {
         if(props.currentHotelId !== -1 && props.currentHotelId !== undefined) {
             console.log("Fetching reservations with " + props.currentHotelId);
             getReservationsByHotelId(props.currentHotelId)
@@ -52,9 +59,21 @@ function ManagerViewReservations(props) {
                     setReservations(response);
                 })
         }
-    }, [props.currentHotelId])
-
-    console.log("ManagerViewReservations");
+    }
+    
+    const onCancelClicked = (reservationId) => {
+        console.log('cancel', reservationId);
+        cancelReservationById(reservationId)
+        .then(() => {
+            fetchReservations();
+        })
+    }
+    
+    const onModifyClicked = (reservation) => {
+        console.log('modify', reservation);
+        props.setCurrentReservationFn(reservation);
+        navigate('/admin/reservation/modify');
+    }
 
     return (
         <div>
@@ -62,7 +81,6 @@ function ManagerViewReservations(props) {
             <ThemeProvider theme={theme}>
                 <Container component="main">
                     <CssBaseline />
-                    <Stack sx={{ width: '100%' }} spacing={2}>{alert}</Stack>
                     <Grid container spacing={2} sx={{ width: '100%' }}>
                         {reservations.map((reservation, ndx) => {
                             return (
@@ -73,8 +91,8 @@ function ManagerViewReservations(props) {
                                         <Typography>Room Number: {reservation.roomId}</Typography>
                                         <Typography>Start Date: {moment(reservation.startDate).format('MMMM DD, YYYY')}</Typography>
                                         <Typography>End Date: {moment(reservation.endDate).format('MMMM DD, YYYY')}</Typography>
-                                        <Button sx={{marginTop: '15px'}} variant="outlined">Cancel</Button>
-                                        <Button sx={{marginTop: '15px', marginLeft: '15px'}} variant="contained">Modify</Button>
+                                        <Button onClick={() => onCancelClicked(reservation.id)} sx={{marginTop: '15px'}} variant="outlined">Cancel</Button>
+                                        <Button onClick={() => onModifyClicked(reservation)} sx={{marginTop: '15px', marginLeft: '15px'}} variant="contained">Modify</Button>
                                     </Paper>
                                 </Grid>
                             );
@@ -103,7 +121,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        setCurrentHotelIdFn: (currentHotelId) => dispatch(setCurrentHotelId(currentHotelId))
+        setCurrentHotelIdFn: (currentHotelId) => dispatch(setCurrentHotelId(currentHotelId)),
+        setCurrentReservationFn: (currentReservation) => dispatch(setCurrentReservation(currentReservation))
     }
   }
 

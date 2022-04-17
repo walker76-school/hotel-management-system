@@ -23,6 +23,7 @@ import LinkToHotel from 'pages/admin/LinkToHotel';
 import CreateHotelScaffold from 'pages/hotel/CreateHotelScaffold';
 import { connect } from 'react-redux';
 import { setCurrentUser, logout } from 'redux/user/User.actions';
+import ManagerModifyReservation from 'pages/modifyreservation/manager/ManagerModifyReservation';
 
 //Formatting
 const theme = createTheme({
@@ -98,9 +99,10 @@ function App(props) {
                         <Route path="login" element={<Login onLogin={handleLogin} {...props} />}/>
                         <Route path="error" element={<NotFound />}/>
                         <Route path="admin" element={<PrivateRoute />}>
-                            <Route path="viewreservations" element={<ManagerViewReservations />}/>
                             <Route path="hotel/create" element={<CreateHotelScaffold />}/>
+                            <Route path="reservation/view" element={<ManagerViewReservations />}/>
                             <Route path="reservation/create" element={<ManagerCreateReservation />}/>
+                            <Route path="reservation/modify" element={<ManagerModifyReservation />}/>
                             <Route path="link" element={<LinkToHotel />}/>
                             <Route path="refresh" element={<AdminRefresh />}/>
                         </Route>

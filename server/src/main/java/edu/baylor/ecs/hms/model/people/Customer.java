@@ -5,6 +5,7 @@ import edu.baylor.ecs.hms.model.reservation.Reservation;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -18,7 +19,7 @@ import java.util.Set;
 @DiscriminatorValue("CUST")
 public class Customer extends User {
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<Reservation> reservations = new HashSet<>();
 
     public Customer(String username, String password) {
