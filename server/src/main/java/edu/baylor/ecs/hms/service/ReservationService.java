@@ -82,15 +82,27 @@ public class ReservationService implements IService<ReservationDTO> {
         Reservation reservation = reservationDAO.get(reservationDTO.getId()).orElseThrow((Supplier<Throwable>) () -> new ResourceNotFoundException("reservation", "id", reservationDTO.getId()));
         Room room = roomDAO.get(reservationDTO.getRoomId()).orElseThrow((Supplier<Throwable>) () -> new ResourceNotFoundException("room", "id", reservationDTO.getRoomId()));
 
-        room.getReservations().remove(reservation);
         reservation.setRoom(room);
         room.getReservations().add(reservation);
 
         reservation.setStartDate(reservationDTO.getStartDate());
         reservation.setEndDate(reservationDTO.getEndDate());
 
-        reservationDAO.update(reservation);
         roomDAO.update(room);
+        reservationDAO.update(reservation);
+    }
+
+    public void update(ReservationDTO reservationDTO, Long oldRoomId) throws Throwable {
+        Reservation reservation = reservationDAO.get(reservationDTO.getId()).orElseThrow((Supplier<Throwable>) () -> new ResourceNotFoundException("reservation", "id", reservationDTO.getId()));
+        Room room = roomDAO.get(oldRoomId).orElseThrow((Supplier<Throwable>) () -> new ResourceNotFoundException("room", "id", oldRoomId));
+
+        room.getReservations().remove(reservation);
+        reservation.setRoom(null);
+
+        roomDAO.update(room);
+        reservationDAO.update(reservation);
+
+        update(reservationDTO);
     }
 
     @Override

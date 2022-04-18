@@ -59,7 +59,7 @@ public class ReservationController {
     @PutMapping("/")
     @PreAuthorize("hasRole('USER')")
     public void update(@RequestBody ReservationUpdateRequest reservationRequest) throws Throwable {
-        reservationService.update(reservationRequest.toDTO());
+        reservationService.update(reservationRequest.toDTO(), reservationRequest.getOldRoomId());
     }
 
     /**

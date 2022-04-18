@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,7 +12,7 @@ import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import Stack from '@mui/material/Stack';
 import { connect } from 'react-redux';
-import { createHotelReservation } from './API';
+import { modifyHotelReservation } from './API';
 import * as moment from 'moment';
 
 const theme = createTheme();
@@ -24,17 +24,49 @@ function ManagerModifyReservation(props) {
     let [alert, setAlert] = useState(null);
 
     let [customerUsername, setCustomerUsername] = useState({
-        value: props.currentReservation.customerUsername
+        value: ""
     });
     let [startDate, setStartDate] = useState({
-        value: props.currentReservation.startDate
+        value: ""
     });
     let [endDate, setEndDate] = useState({
-        value: props.currentReservation.endDate
+        value: ""
     });
     let [roomId, setRoomId] = useState({
-        value: props.currentReservation.roomId
+        value: ""
     });
+
+    let [oldRoomId, setOldRoomId] = useState(-1);
+
+    useEffect(() => {
+
+        console.log('useEffect');
+
+        if(props.currentReservation != null) {
+            console.log('Setting proper values');
+            setCustomerUsername({
+                ...customerUsername,
+                value: (props.currentReservation != null ? props.currentReservation.customerUsername : ""),
+                ...validatePassthrough(props.currentReservation.customerUsername)
+            });
+            setStartDate({
+                ...startDate,
+                value: (props.currentReservation != null ? moment(props.currentReservation.startDate).format('MM/DD/YYYY') : ""),
+                ...validatePassthrough(moment(props.currentReservation.startDate).format('MM/DD/YYYY'))
+            });
+            setEndDate({
+                ...endDate,
+                value: (props.currentReservation != null ? moment(props.currentReservation.endDate).format('MM/DD/YYYY') : ""),
+                ...validatePassthrough(moment(props.currentReservation.endDate).format('MM/DD/YYYY'))
+            });
+            setRoomId({
+                ...roomId,
+                value: (props.currentReservation != null ? props.currentReservation.roomId : ""),
+                ...validatePassthrough(props.currentReservation.roomId)
+            });
+            setOldRoomId(props.currentReservation.roomId);
+        }
+    }, [props.currentReservation])
 
     const setters = {
         customerUsername: setCustomerUsername,
@@ -92,33 +124,41 @@ function ManagerModifyReservation(props) {
         }
 
         const managerCreateReservationRequest = {
+            id: props.currentReservation.id,
             customerUsername: customerUsername.value,
             startDate: moment(startDate.value, 'MM/DD/YYYY'),
             endDate: moment(endDate.value, 'MM/DD/YYYY'),
-            roomId: roomId.value
+            roomId: roomId.value,
+            oldRoomId: oldRoomId
         };
 
         console.log('managerCreateReservationRequest', managerCreateReservationRequest);
 
         // TODO
-        createHotelReservation(managerCreateReservationRequest)
+        modifyHotelReservation(managerCreateReservationRequest)
             .then(response => {
                 console.log('.then');
                 setAlert(
                     <Alert severity="success">
                         <AlertTitle>Success</AlertTitle>
-                        Hotel successfully created!
+                        Reservation Modified!
                     </Alert>
                 );
 
                 navigate("/admin/reservation/view");
             }).catch(error => {
-                setAlert(
-                    <Alert severity="error">
-                        <AlertTitle>Error</AlertTitle>
-                        Sorry! Something went wrong. Please try again!
-                    </Alert>
-                );
+                console.log(error);
+                if(error.toString().includes("SyntaxError")) {
+                    navigate("/admin/reservation/view");
+                    return;
+                } else {
+                    setAlert(
+                        <Alert severity="error">
+                            <AlertTitle>Error</AlertTitle>
+                            Sorry! Something went wrong. Please try again!
+                        </Alert>
+                    );
+                }
             });
     };
   
@@ -136,7 +176,7 @@ function ManagerModifyReservation(props) {
             }}
           >
             <Typography component="h1" variant="h5">
-              Create Reservation
+              Modify Reservation
             </Typography>
             <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                 <TextField

@@ -9,7 +9,7 @@ export default function reservationReducer(state = initialState, action) {
       case SET_CURRENT_RESERVATION:
         return { 
           ...state,
-          currentUser: action.payload 
+          currentReservation: action.payload 
         }
       default:
         return state

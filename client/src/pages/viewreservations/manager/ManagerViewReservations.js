@@ -27,7 +27,8 @@ function ManagerViewReservations(props) {
     useEffect(() => {
 
         if(props.currentUser === null) {
-            navigate('/login');
+            console.log('navigating to login');
+            // navigate('/login');
             return;
         }
 
@@ -42,7 +43,7 @@ function ManagerViewReservations(props) {
                     }
                 });
         }
-    }, [navigate]);
+    }, [navigate, props.currentUser]);
 
     useEffect(() => {
         fetchReservations();
@@ -65,6 +66,10 @@ function ManagerViewReservations(props) {
         console.log('cancel', reservationId);
         cancelReservationById(reservationId)
         .then(() => {
+            fetchReservations();
+        })
+        .catch((error) => {
+            console.log(error);
             fetchReservations();
         })
     }
